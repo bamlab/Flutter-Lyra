@@ -8,7 +8,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
-import 'package:flutter_payzen_platform_interface/info.dart';
 
 /// The Android implementation of [FlutterPayzenPlatform].
 class FlutterPayzenAndroid extends FlutterPayzenPlatform {
@@ -19,10 +18,5 @@ class FlutterPayzenAndroid extends FlutterPayzenPlatform {
   /// Registers this class as the default instance of [FlutterPayzenPlatform]
   static void registerWith() {
     FlutterPayzenPlatform.instance = FlutterPayzenAndroid();
-  }
-
-  @override
-  Future<Infos?> search() {
-    return InfosApi().search();
   }
 }

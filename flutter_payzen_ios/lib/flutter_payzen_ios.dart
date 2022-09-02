@@ -8,7 +8,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
-import 'package:flutter_payzen_platform_interface/info.dart';
 
 /// The iOS implementation of [FlutterPayzenPlatform].
 class FlutterPayzenIOS extends FlutterPayzenPlatform {
@@ -19,10 +18,5 @@ class FlutterPayzenIOS extends FlutterPayzenPlatform {
   /// Registers this class as the default instance of [FlutterPayzenPlatform]
   static void registerWith() {
     FlutterPayzenPlatform.instance = FlutterPayzenIOS();
-  }
-
-  @override
-  Future<Infos?> search() {
-    return InfosApi().search();
   }
 }

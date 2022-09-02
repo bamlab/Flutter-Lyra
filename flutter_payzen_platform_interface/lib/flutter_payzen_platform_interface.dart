@@ -5,7 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:flutter_payzen_platform_interface/info.dart';
+import 'package:flutter_payzen_platform_interface/info.g.dart';
 import 'package:flutter_payzen_platform_interface/src/method_channel_flutter_payzen.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -37,5 +37,7 @@ abstract class FlutterPayzenPlatform extends PlatformInterface {
   }
 
   /// Return Informations
-  Future<Infos?> search();
+  Future<Infos?> search() {
+    return InfosApi().search();
+  }
 }

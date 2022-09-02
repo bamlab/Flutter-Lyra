@@ -6,7 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
-import 'package:flutter_payzen_platform_interface/info.dart';
+import 'package:flutter_payzen_platform_interface/info.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class FlutterPayzenMock extends FlutterPayzenPlatform {

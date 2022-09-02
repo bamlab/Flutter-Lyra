@@ -7,7 +7,7 @@
 
 import 'package:flutter_payzen/flutter_payzen.dart';
 import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
-import 'package:flutter_payzen_platform_interface/info.dart';
+import 'package:flutter_payzen_platform_interface/info.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -36,7 +36,14 @@ void main() {
         ).thenAnswer((_) async => infos);
 
         final actualPlatformName = await search();
-        expect(actualPlatformName, equals(infos));
+        expect(
+          actualPlatformName.info1,
+          infos.info1,
+        );
+        expect(
+          actualPlatformName.info2,
+          infos.info2,
+        );
       });
 
       test('throws exception when platform implementation is missing',

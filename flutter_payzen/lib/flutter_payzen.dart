@@ -22,9 +22,6 @@ class InvalidDataException implements Exception {
   const InvalidDataException([this.message = '']);
 
   final String message;
-
-  @override
-  String toString() => message;
 }
 
 /// Returns the name of the current platform.
