@@ -1,21 +1,59 @@
-name: flutter_payzen_platform_interface
+name: Test Flutter Payzen Platform Interface
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/flutter_payzen_platform_interface.yaml"
-      - "src/flutter_payzen_platform_interface/**"
   push:
+    paths:
+      - "flutter_payzen_platform_interface/**"
+      - ".github/workflows/flutter_payzen_platform_interface.yaml"
     branches:
       - main
+  pull_request:
     paths:
+      - "flutter_payzen_platform_interface/**"
       - ".github/workflows/flutter_payzen_platform_interface.yaml"
-      - "src/flutter_payzen_platform_interface/**"
+    branches:
+      - main
 
 jobs:
-  build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
-    with:
-      flutter_channel: stable
-      flutter_version: 3.0.0
-      working_directory: src/flutter_payzen_platform_interface
+  test:
+    strategy:
+      matrix: {dir: ["flutter_payzen_platform_interface"]}
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ${{ matrix.dir }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v2.5.0
+        with:
+          flutter-version: 3.3.0
+          channel: "stable"
+          cache: true
+          cache-key: ${{ runner.os }}-flutter-3.3.0
+          cache-path: ${{ runner.tool_cache }}/flutter-3.3.0
+
+      - name: Install Dependencies
+        run: flutter packages get
+
+      - name: Format
+        run: flutter format --set-exit-if-changed lib test
+
+      - name: Analyze
+        run: flutter analyze lib test
+
+      - name: Run tests
+        run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
+
+      - name: Install Remove From Coverage
+        run: dart pub global activate remove_from_coverage
+
+      - name: Remove from coverage generated files
+        run: remove_from_coverage -f coverage/lcov.info -r '\.gql\.dart$|\.g\.dart$|\.freezed\.dart$'
+
+      - name: Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
+        with:
+          path: "./${{ matrix.dir }}/coverage/lcov.info"
+          min_coverage: 75
