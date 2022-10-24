@@ -1,4 +1,4 @@
-package tech.bam.flutter_payzen.example
+package com.example.flutter_payzen_example
 
 import io.flutter.embedding.android.FlutterActivity
 
