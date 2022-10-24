@@ -4,7 +4,7 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=2.18.0 <3.0.0"
   flutter: ">=3.0.0"
 
 flutter:
@@ -19,11 +19,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_payzen_android:
-    path: ../flutter_payzen_android
+    path: ^0.1.0+1
   flutter_payzen_ios:
-    path: ../flutter_payzen_ios
+    path: ^0.1.0+1
   flutter_payzen_platform_interface:
-    path: ../flutter_payzen_platform_interface
+    path: ^0.1.0+1
 
 dev_dependencies:
   analyzer: ^4.7.0
