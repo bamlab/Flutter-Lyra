@@ -21,6 +21,10 @@
       "path": "flutter_payzen_platform_interface"
     },
     {
+      "name": "🚀 Devops",
+      "path": ".github"
+    },
+    {
       "name": "🌪 All",
       "path": "./"
     }
