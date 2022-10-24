@@ -15,4 +15,5 @@ dev_dependencies:
   analyzer: ^4.7.0
   flutter_test:
     sdk: flutter
+  mocktail: ^0.3.0
   pigeon: ^4.0.0

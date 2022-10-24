@@ -1,37 +1,53 @@
-// Copyright (c) 2022, Very Good Ventures
-// https://verygood.ventures
-//
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://opensource.org/licenses/MIT.
-
 import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
-import 'package:flutter_payzen_platform_interface/info.g.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
-class FlutterPayzenMock extends FlutterPayzenPlatform {
-  static final mockSearchInfos = Infos(info1: 'info1', info2: 'info2');
+class MockPayzenHostApi extends Mock implements PayzenHostApi {}
 
-  @override
-  Future<Infos> search() async => mockSearchInfos;
-}
+class TestFlutterPayzen extends FlutterPayzenPlatform {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('FlutterPayzenPlatformInterface', () {
     late FlutterPayzenPlatform flutterPayzenPlatform;
+    late PayzenHostApi mockPayzenHostApi;
 
     setUp(() {
-      flutterPayzenPlatform = FlutterPayzenMock();
+      flutterPayzenPlatform = TestFlutterPayzen();
       FlutterPayzenPlatform.instance = flutterPayzenPlatform;
+
+      mockPayzenHostApi = MockPayzenHostApi();
+
+      flutterPayzenPlatform.payzenHostApi = mockPayzenHostApi;
     });
 
-    group('getPlatformName', () {
-      test('returns correct name', () async {
-        expect(
-          await FlutterPayzenPlatform.instance.search(),
-          equals(FlutterPayzenMock.mockSearchInfos),
+    tearDown(() {
+      reset(mockPayzenHostApi);
+    });
+
+    group('initialize', () {
+      test('returns correct lyra config', () async {
+        const publicKey = 'publicKey';
+        final options = LyraInitializeOptionsInterface(
+          apiServerName: 'apiServerName',
+          cardScanningEnabled: true,
+          nfcEnabled: false,
         );
+
+        final lyraKeyInterface =
+            LyraKeyInterface(publicKey: publicKey, options: options);
+
+        registerFallbackValue(lyraKeyInterface);
+        when(() => mockPayzenHostApi.initialize(any()))
+            .thenAnswer((_) async => lyraKeyInterface);
+
+        final receivedLyraKeyInterface =
+            await FlutterPayzenPlatform.instance.initialize(
+          publicKey: publicKey,
+          options: options,
+        );
+
+        expect(lyraKeyInterface, receivedLyraKeyInterface);
       });
     });
   });
