@@ -28,7 +28,9 @@ class InvalidDataException implements Exception {
 Future<SuperInfos> search() async {
   final infos = await _platform.search();
 
-  if (infos == null) throw const InvalidDataException('no infos retrieved');
+  if (infos == null) {
+    throw const InvalidDataException('no infos retrieved');
+  }
 
   final info1 = infos.info1;
   final info2 = infos.info2;

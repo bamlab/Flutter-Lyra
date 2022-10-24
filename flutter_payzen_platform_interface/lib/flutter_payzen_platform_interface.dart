@@ -5,9 +5,10 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:flutter_payzen_platform_interface/info.g.dart';
-import 'package:flutter_payzen_platform_interface/src/method_channel_flutter_payzen.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+
+import 'info.g.dart';
+import 'src/method_channel_flutter_payzen.dart';
 
 /// The interface that implementations of flutter_payzen must implement.
 ///

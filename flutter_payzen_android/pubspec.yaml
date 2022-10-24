@@ -23,7 +23,7 @@ dependencies:
     path: ../flutter_payzen_platform_interface
 
 dev_dependencies:
+  analyzer: ^4.7.0
   flutter_test:
     sdk: flutter
   plugin_platform_interface: ^2.0.0
-  very_good_analysis: ^3.0.1

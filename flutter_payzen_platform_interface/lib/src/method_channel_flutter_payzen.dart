@@ -7,7 +7,8 @@
 
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/services.dart';
-import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
+
+import '../flutter_payzen_platform_interface.dart';
 
 /// An implementation of [FlutterPayzenPlatform] that uses method channels.
 class MethodChannelFlutterPayzen extends FlutterPayzenPlatform {
