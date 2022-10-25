@@ -1,1 +1,1 @@
-#import "info.h"
+#import "payzen_api.h"
