@@ -33,17 +33,17 @@ abstract class FlutterLyraPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  static PayzenHostApi _payzenHostApi = PayzenHostApi();
+  static LyraHostApi _lyraHostApi = LyraHostApi();
 
-  /// The default instance of [PayzenHostApi] to use
-  PayzenHostApi get payzenHostApi => _payzenHostApi;
+  /// The default instance of [LyraHostApi] to use
+  LyraHostApi get lyraHostApi => _lyraHostApi;
 
-  /// You can use this to set another instance of [PayzenHostApi] to use
+  /// You can use this to set another instance of [LyraHostApi] to use
   ///
   /// This only for a test usage
   @visibleForTesting
-  set payzenHostApi(PayzenHostApi newPayzenHostApi) {
-    _payzenHostApi = newPayzenHostApi;
+  set lyraHostApi(LyraHostApi newLyraHostApi) {
+    _lyraHostApi = newLyraHostApi;
   }
 
   /// {@macro flutter_lyra.lyraManager.initialize}
@@ -51,7 +51,7 @@ abstract class FlutterLyraPlatform extends PlatformInterface {
     required String publicKey,
     required LyraInitializeOptionsInterface options,
   }) {
-    return payzenHostApi
+    return lyraHostApi
         .initialize(LyraKeyInterface(publicKey: publicKey, options: options));
   }
 }

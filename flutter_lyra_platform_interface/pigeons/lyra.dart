@@ -2,15 +2,15 @@ import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(
   PigeonOptions(
-    dartOut: 'lib/src/payzen.g.dart',
+    dartOut: 'lib/src/lyra.g.dart',
     javaOut:
-        '../flutter_payzen_android/android/src/main/java/tech/bam/flutter_payzen/android/PayzenApi.java',
+        '../flutter_lyra_android/android/src/main/java/tech/bam/flutter_lyra/android/LyraApi.java',
     javaOptions: JavaOptions(
-      package: 'tech.bam.flutter_payzen.android',
-      className: 'PayzenApi',
+      package: 'tech.bam.flutter_lyra.android',
+      className: 'LyraApi',
     ),
-    objcHeaderOut: '../flutter_payzen_ios/ios/Classes/payzen_api.h',
-    objcSourceOut: '../flutter_payzen_ios/ios/Classes/payzen_api.m',
+    objcHeaderOut: '../flutter_lyra_ios/ios/Classes/lyra_api.h',
+    objcSourceOut: '../flutter_lyra_ios/ios/Classes/lyra_api.m',
   ),
 )
 class LyraInitializeOptionsInterface {
@@ -36,7 +36,7 @@ class LyraKeyInterface {
 }
 
 @HostApi()
-abstract class PayzenHostApi {
+abstract class LyraHostApi {
   @async
   LyraKeyInterface initialize(LyraKeyInterface lyraKey);
 }
