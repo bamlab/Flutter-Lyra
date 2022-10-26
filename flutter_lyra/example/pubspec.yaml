@@ -1,5 +1,5 @@
-name: flutter_payzen_example
-description: Demonstrates how to use the flutter_payzen plugin.
+name: flutter_lyra_example
+description: Demonstrates how to use the flutter_lyra plugin.
 version: 0.1.0+1
 publish_to: none
 
@@ -9,9 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_payzen:
+  flutter_lyra:
     # When depending on this package from a real application you should use:
-    #   flutter_payzen: ^x.y.z
+    #   flutter_lyra: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.

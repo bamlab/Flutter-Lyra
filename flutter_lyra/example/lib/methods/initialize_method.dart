@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_payzen/flutter_payzen.dart';
+import 'package:flutter_lyra/flutter_lyra.dart';
 
 import '../const.dart';
 import '../widgets/custom_text_field.dart';
@@ -46,7 +46,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
         cardScanningEnabled = newCardScanningEnabled;
       });
 
-  Future<void> initializeReachFive() async {
+  Future<void> initializeLyra() async {
     setState(() {
       areInteractionsDisabled = true;
     });
@@ -130,7 +130,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
         ],
         const SizedBox(height: 32),
         ElevatedButton(
-          onPressed: !isButtonDisabled ? initializeReachFive : null,
+          onPressed: !isButtonDisabled ? initializeLyra : null,
           child: Text(
             lyra == null ? 'Get Lyra Config' : 'Lyra is already initialized',
           ),

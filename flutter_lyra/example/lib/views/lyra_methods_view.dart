@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_payzen/flutter_payzen.dart';
+import 'package:flutter_lyra/flutter_lyra.dart';
 
 import '../const.dart';
 import '../methods/initialize_method.dart';
 
-enum PayzenMethod {
+enum LyraMethod {
   initialize,
 }
 
-class PayzenMethodsView extends StatefulWidget {
-  const PayzenMethodsView({
+class LyraMethodsView extends StatefulWidget {
+  const LyraMethodsView({
     required this.dataSet,
     super.key,
   });
@@ -17,19 +17,18 @@ class PayzenMethodsView extends StatefulWidget {
   final DataSet dataSet;
 
   @override
-  State<PayzenMethodsView> createState() => _PayzenMethodsViewState();
+  State<LyraMethodsView> createState() => _LyraMethodsViewState();
 }
 
-class _PayzenMethodsViewState extends State<PayzenMethodsView>
+class _LyraMethodsViewState extends State<LyraMethodsView>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
-  var selectedPayzenMethod = PayzenMethod.initialize;
+  var selectedLyraMethod = LyraMethod.initialize;
 
-  void setSelectedPayzenMethod(PayzenMethod newSelectedReachFiveMethod) =>
-      setState(() {
-        selectedPayzenMethod = newSelectedReachFiveMethod;
+  void setSelectedLyraMethod(LyraMethod newSelectedLyraMethod) => setState(() {
+        selectedLyraMethod = newSelectedLyraMethod;
       });
 
   Lyra? lyra;
@@ -49,23 +48,23 @@ class _PayzenMethodsViewState extends State<PayzenMethodsView>
       child: Column(
         children: [
           const SizedBox(width: double.infinity),
-          DropdownButton<PayzenMethod>(
-            value: selectedPayzenMethod,
-            items: PayzenMethod.values
+          DropdownButton<LyraMethod>(
+            value: selectedLyraMethod,
+            items: LyraMethod.values
                 .map(
-                  (lyraMethod) => DropdownMenuItem<PayzenMethod>(
+                  (lyraMethod) => DropdownMenuItem<LyraMethod>(
                     value: lyraMethod,
                     child: Text(lyraMethod.name),
                   ),
                 )
                 .toList(),
             onChanged: (lyraMethod) =>
-                lyraMethod != null ? setSelectedPayzenMethod(lyraMethod) : null,
+                lyraMethod != null ? setSelectedLyraMethod(lyraMethod) : null,
           ),
           Expanded(
-            child: _PayzenMethodView(
+            child: _LyraMethodView(
               dataSet: widget.dataSet,
-              payzenMethod: selectedPayzenMethod,
+              lyraMethod: selectedLyraMethod,
               lyra: lyra,
               setLyra: setLyra,
             ),
@@ -76,28 +75,28 @@ class _PayzenMethodsViewState extends State<PayzenMethodsView>
   }
 }
 
-class _PayzenMethodView extends StatelessWidget {
-  const _PayzenMethodView({
+class _LyraMethodView extends StatelessWidget {
+  const _LyraMethodView({
     required this.dataSet,
-    required this.payzenMethod,
+    required this.lyraMethod,
     required this.lyra,
     required this.setLyra,
   });
 
   final DataSet dataSet;
 
-  final PayzenMethod payzenMethod;
+  final LyraMethod lyraMethod;
 
   final Lyra? lyra;
   final void Function(Lyra) setLyra;
 
   @override
   Widget build(BuildContext context) {
-    final payzenMethod = this.payzenMethod;
+    final lyraMethod = this.lyraMethod;
     final lyra = this.lyra;
 
-    switch (payzenMethod) {
-      case PayzenMethod.initialize:
+    switch (lyraMethod) {
+      case LyraMethod.initialize:
         return InitializeMethod(
           dataSet: dataSet,
           lyra: lyra,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'const.dart';
-import 'views/payzen_methods_view.dart';
+import 'views/lyra_methods_view.dart';
 
 void main() => runApp(const MyApp());
 
@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Flutter Payzen Example \n ${dataSet.name}'),
+          title: Text('Flutter Lyra Example \n ${dataSet.name}'),
         ),
-        body: PayzenMethodsView(
+        body: LyraMethodsView(
           dataSet: dataSet,
         ),
       ),

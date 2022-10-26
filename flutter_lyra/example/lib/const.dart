@@ -4,10 +4,10 @@ abstract class DataSet {
   /// Your data set name
   String get name;
 
-  /// Your payzen public key
+  /// Your lyra public key
   String get initialPublicKey;
 
-  /// Your payzen api server name
+  /// Your lyra api server name
   String get initialApiServerName;
 }
 
@@ -18,11 +18,11 @@ class _FirstDataSet extends DataSet {
   @override
   String get name => 'My First Instance Data Set';
 
-  /// Your payzen public key
+  /// Your lyra public key
   @override
   String get initialPublicKey => '';
 
-  /// Your payzen api server name
+  /// Your lyra api server name
   @override
   String get initialApiServerName => '';
 }
