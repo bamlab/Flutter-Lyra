@@ -50,5 +50,19 @@ void main() {
         expect(lyraKeyInterface, receivedLyraKeyInterface);
       });
     });
+
+    group('getFormTokenVersion', () {
+      test('returns correct form token version', () async {
+        const formTokenVersion = 1;
+
+        when(() => mockLyraHostApi.getFormTokenVersion())
+            .thenAnswer((_) async => formTokenVersion);
+
+        final receivedFormTokenVersion =
+            await FlutterLyraPlatform.instance.getFormTokenVersion();
+
+        expect(formTokenVersion, receivedFormTokenVersion);
+      });
+    });
   });
 }

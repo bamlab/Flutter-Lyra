@@ -50,8 +50,10 @@ abstract class FlutterLyraPlatform extends PlatformInterface {
   Future<LyraKeyInterface> initialize({
     required String publicKey,
     required LyraInitializeOptionsInterface options,
-  }) {
-    return lyraHostApi
-        .initialize(LyraKeyInterface(publicKey: publicKey, options: options));
-  }
+  }) =>
+      lyraHostApi
+          .initialize(LyraKeyInterface(publicKey: publicKey, options: options));
+
+  /// {@macro flutter_lyra.lyraManager.getFormTokenVersion}
+  Future<int> getFormTokenVersion() => lyraHostApi.getFormTokenVersion();
 }
