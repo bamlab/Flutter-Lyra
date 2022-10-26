@@ -24,6 +24,17 @@ class Lyra {
   /// [Lyra] list of options used when initializing the instance
   /// {@endtemplate}
   final LyraInitializeOptions options;
+
+  /// @template flutter_lyra.lyra.getFormTokenVersion}
+  /// Get the form token version link to this sdk version
+  ///
+  /// You need to add it to your paiement request
+  /// {@endtemplate}
+  Future<int> getFormTokenVersion() async {
+    final formTokenVersion = await _platform.getFormTokenVersion();
+
+    return formTokenVersion;
+  }
 }
 
 /// {@template flutter_lyra.lyraManager}

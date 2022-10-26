@@ -17,21 +17,26 @@ void main() {
 
   group('FlutterLyra', () {
     late FlutterLyraPlatform flutterLyraPlatform;
+    late String publicKey;
+    late LyraInitializeOptions options;
+    late Lyra lyra;
 
     setUp(() {
       flutterLyraPlatform = MockFlutterLyraPlatform();
       FlutterLyraPlatform.instance = flutterLyraPlatform;
+
+      publicKey = 'publicKey';
+      options = const LyraInitializeOptions(
+        apiServerName: 'apiServerName',
+        cardScanningEnabled: true,
+        nfcEnabled: false,
+      );
+
+      lyra = Lyra(publicKey: publicKey, options: options);
     });
 
     group('initialize', () {
       test('returns correct lyra instance', () async {
-        const publicKey = 'publicKey';
-        const options = LyraInitializeOptions(
-          apiServerName: 'apiServerName',
-          cardScanningEnabled: true,
-          nfcEnabled: false,
-        );
-
         final lyraKeyInterface = LyraKeyInterface(
           publicKey: publicKey,
           options: LyraInitializeOptionsConverter.toInterface(options),
@@ -57,6 +62,25 @@ void main() {
         expect(
           lyraKeyInterface.publicKey,
           lyraReceived.publicKey,
+        );
+      });
+    });
+
+    group('getFormTokenVersion', () {
+      test('returns correct form token version', () async {
+        const formTokenVersion = 3;
+
+        when(
+          flutterLyraPlatform.getFormTokenVersion,
+        ).thenAnswer(
+          (_) async => formTokenVersion,
+        );
+
+        final receivedFormTokenVersion = await lyra.getFormTokenVersion();
+
+        expect(
+          formTokenVersion,
+          receivedFormTokenVersion,
         );
       });
     });
