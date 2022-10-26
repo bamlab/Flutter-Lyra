@@ -6,24 +6,24 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/services.dart';
-import 'package:flutter_payzen_android/flutter_payzen_android.dart';
-import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
+import 'package:flutter_lyra_android/flutter_lyra_android.dart';
+import 'package:flutter_lyra_platform_interface/flutter_lyra_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('FlutterPayzenAndroid', () {
+  group('FlutterLyraAndroid', () {
     const kPlatformName = 'Android';
-    late FlutterPayzenAndroid flutterPayzen;
+    late FlutterLyraAndroid flutterLyra;
     late List<MethodCall> log;
 
     setUp(() async {
-      flutterPayzen = FlutterPayzenAndroid();
+      flutterLyra = FlutterLyraAndroid();
 
       log = <MethodCall>[];
       TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
-          .setMockMethodCallHandler(flutterPayzen.methodChannel,
+          .setMockMethodCallHandler(flutterLyra.methodChannel,
               (methodCall) async {
         log.add(methodCall);
         switch (methodCall.method) {
@@ -36,8 +36,8 @@ void main() {
     });
 
     test('can be registered', () {
-      FlutterPayzenAndroid.registerWith();
-      expect(FlutterPayzenPlatform.instance, isA<FlutterPayzenAndroid>());
+      FlutterLyraAndroid.registerWith();
+      expect(FlutterLyraPlatform.instance, isA<FlutterLyraAndroid>());
     });
   });
 }

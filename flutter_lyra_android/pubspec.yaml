@@ -1,5 +1,5 @@
-name: flutter_payzen_android
-description: Android implementation of the flutter_payzen plugin
+name: flutter_lyra_android
+description: Android implementation of the flutter_lyra plugin
 version: 0.1.0+1
 publish_to: none
 
@@ -9,7 +9,7 @@ environment:
 
 flutter:
   plugin:
-    implements: flutter_payzen
+    implements: flutter_lyra
     platforms:
       android:
         package: tech.bam.flutter_payzen.android
@@ -19,7 +19,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_payzen_platform_interface:
+  flutter_lyra_platform_interface:
     path: ^0.1.0+1
 
 dev_dependencies:
