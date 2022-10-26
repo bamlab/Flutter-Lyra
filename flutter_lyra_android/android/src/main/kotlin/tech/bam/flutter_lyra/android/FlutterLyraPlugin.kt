@@ -6,7 +6,8 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 
 class FlutterLyraPlugin : FlutterPlugin, LyraApi.LyraHostApi
 {
-  private var context: Context? = null
+    private var context: Context? = null
+    private var lyraKey: LyraApi.LyraKeyInterface? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         LyraApi.LyraHostApi.setup(flutterPluginBinding.binaryMessenger, this)
@@ -34,6 +35,7 @@ class FlutterLyraPlugin : FlutterPlugin, LyraApi.LyraHostApi
                 lyraKey.publicKey,
                 Converters.initializeOptionsFromInterface(lyraKey.options)
             )
+            this.lyraKey = lyraKey
             result.success(lyraKey)
         } catch (error: Throwable) {
             result.error(
@@ -44,5 +46,21 @@ class FlutterLyraPlugin : FlutterPlugin, LyraApi.LyraHostApi
                 )
             )
         }
+    }
+
+    override fun getFormTokenVersion(result: LyraApi.Result<Long>) {
+        if (lyraKey == null) {
+            result.error(
+                FlutterError(
+                    code = "lyra_not_initialized_error_code",
+                    message = "You should initialize Lyra first",
+                    details = null
+                )
+            )
+            return
+        }
+        val formTokenVersion = Lyra.getFormTokenVersion()
+
+        result.success(formTokenVersion.toLong())
     }
 }
