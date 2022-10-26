@@ -2,12 +2,12 @@ import Flutter
 import UIKit
 import LyraPaymentSDK
 
-public class SwiftFlutterPayzenPlugin: NSObject, FlutterPlugin, PayzenHostApi {
+public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
     public static func register(with registrar: FlutterPluginRegistrar) {
         let messenger : FlutterBinaryMessenger = registrar.messenger()
-        let api : PayzenHostApi & NSObjectProtocol = SwiftFlutterPayzenPlugin.init()
+        let api : LyraHostApi & NSObjectProtocol = SwiftFlutterLyraPlugin.init()
         
-        PayzenHostApiSetup(messenger, api);
+        LyraHostApiSetup(messenger, api);
     }
     
     public func initializeLyraKey(_ lyraKey: LyraKeyInterface, completion: @escaping (LyraKeyInterface?, FlutterError?) -> Void)

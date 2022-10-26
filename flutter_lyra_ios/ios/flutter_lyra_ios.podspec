@@ -2,11 +2,11 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 Pod::Spec.new do |s|
-  s.name             = 'flutter_payzen_ios'
+  s.name             = 'flutter_lyra_ios'
   s.version          = '0.0.1'
-  s.summary          = 'An iOS implementation of the flutter_payzen plugin.'
+  s.summary          = 'An iOS implementation of the flutter_lyra plugin.'
   s.description      = <<-DESC
-  An iOS implementation of the flutter_payzen plugin.
+  An iOS implementation of the flutter_lyra plugin.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :type => 'BSD', :file => '../LICENSE' }

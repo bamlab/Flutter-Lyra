@@ -12,8 +12,8 @@ flutter:
     implements: flutter_lyra
     platforms:
       ios:
-        pluginClass: FlutterPayzenPlugin
-        dartPluginClass: FlutterPayzenIOS
+        pluginClass: FlutterLyraPlugin
+        dartPluginClass: FlutterLyraIOS
 
 dependencies:
   flutter:
