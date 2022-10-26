@@ -26,13 +26,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - id: dotenv
+        uses: falti/dotenv-action@v0.2.8
+        with:
+          path: .github/workflows/.env
+
       - uses: subosito/flutter-action@v2.5.0
         with:
-          flutter-version: 3.3.0
+          flutter-version: ${{ steps.dotenv.outputs.flutter_version }}
           channel: "stable"
           cache: true
-          cache-key: ${{ runner.os }}-flutter-3.3.0
-          cache-path: ${{ runner.tool_cache }}/flutter-3.3.0
+          cache-key: ${{ runner.os }}-flutter-${{ steps.dotenv.outputs.flutter_version }}
+          cache-path: ${{ runner.tool_cache }}/flutter-${{ steps.dotenv.outputs.flutter_version }}
 
       - name: Install Dependencies
         run: flutter packages get
