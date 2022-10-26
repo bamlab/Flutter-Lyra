@@ -1,23 +1,23 @@
-name: Test Flutter Payzen Android
+name: Test Flutter Lyra Android
 
 on:
   push:
     paths:
-      - "flutter_payzen_android/**"
-      - ".github/workflows/flutter_payzen_android.yaml"
+      - "flutter_lyra_android/**"
+      - ".github/workflows/flutter_lyra_android.yaml"
     branches:
       - main
   pull_request:
     paths:
-      - "flutter_payzen_android/**"
-      - ".github/workflows/flutter_payzen_android.yaml"
+      - "flutter_lyra_android/**"
+      - ".github/workflows/flutter_lyra_android.yaml"
     branches:
       - main
 
 jobs:
   test:
     strategy:
-      matrix: {dir: ["flutter_payzen_android"]}
+      matrix: {dir: ["flutter_lyra_android"]}
     runs-on: ubuntu-20.04
     defaults:
       run:

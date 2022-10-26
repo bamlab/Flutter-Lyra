@@ -1,0 +1,90 @@
+{
+  "folders": [
+    {
+      "name": "💻 Flutter Lyra",
+      "path": "flutter_lyra"
+    },
+    {
+      "name": "📱 Flutter Lyra Example",
+      "path": "flutter_lyra/example"
+    },
+    {
+      "name": "🤖 Lyra - Android",
+      "path": "flutter_lyra_android"
+    },
+    {
+      "name": "🍏 Lyra - iOS",
+      "path": "flutter_lyra_ios"
+    },
+    {
+      "name": "📚 Lyra - Platform Interface",
+      "path": "flutter_lyra_platform_interface"
+    },
+    {
+      "name": "🚀 Devops",
+      "path": ".github"
+    },
+    {
+      "name": "🌪 All",
+      "path": "./"
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "dart-code.dart-code",
+      "dart-code.flutter",
+      "streetsidesoftware.code-spell-checker"
+    ]
+  },
+  "settings": {
+    "git.ignoreLimitWarning": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "search.exclude": {
+      "**/.fvm": true
+    },
+    "files.watcherExclude": {
+      "**/.fvm": true,
+      "**/__generated__/**": false,
+      "**/.packages": true,
+      "**/.flutter-plugins*": true,
+      "**/.metadata": true,
+      "**/build": true,
+      "**/coverage": true,
+      "**/.dart_tool": true
+    },
+    "cSpell.words": [
+      "mocktail"
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+      "name": "Flutter Lyra Example Debug",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder:📱 Flutter Lyra Example}",
+        "program": "lib/main.dart",
+      },
+      {
+      "name": "Flutter Lyra Example Profile",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder:📱 Flutter Lyra Example}",
+        "program": "lib/main.dart",
+      "flutterMode": "profile",
+      },
+      {
+      "name": "Flutter Lyra Example Release",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder:📱 Flutter Lyra Example}",
+        "program": "lib/main.dart",
+      "flutterMode": "release",
+      }
+    ]
+  }
+}

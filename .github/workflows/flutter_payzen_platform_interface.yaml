@@ -1,23 +1,23 @@
-name: Test Flutter Payzen Platform Interface
+name: Test Flutter Lyra Platform Interface
 
 on:
   push:
     paths:
-      - "flutter_payzen_platform_interface/**"
-      - ".github/workflows/flutter_payzen_platform_interface.yaml"
+      - "flutter_lyra_platform_interface/**"
+      - ".github/workflows/flutter_lyra_platform_interface.yaml"
     branches:
       - main
   pull_request:
     paths:
-      - "flutter_payzen_platform_interface/**"
-      - ".github/workflows/flutter_payzen_platform_interface.yaml"
+      - "flutter_lyra_platform_interface/**"
+      - ".github/workflows/flutter_lyra_platform_interface.yaml"
     branches:
       - main
 
 jobs:
   test:
     strategy:
-      matrix: {dir: ["flutter_payzen_platform_interface"]}
+      matrix: {dir: ["flutter_lyra_platform_interface"]}
     runs-on: ubuntu-20.04
     defaults:
       run:

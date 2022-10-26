@@ -1,0 +1,28 @@
+name: flutter_lyra_ios
+description: iOS implementation of the flutter_lyra plugin
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+  flutter: ">=3.0.0"
+
+flutter:
+  plugin:
+    implements: flutter_lyra
+    platforms:
+      ios:
+        pluginClass: FlutterLyraPlugin
+        dartPluginClass: FlutterLyraIOS
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_lyra_platform_interface:
+    path: ^0.1.0+1
+
+dev_dependencies:
+  analyzer: ^4.7.0
+  flutter_test:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.0
