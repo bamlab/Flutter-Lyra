@@ -1,24 +1,24 @@
 {
   "folders": [
     {
-      "name": "💻 Flutter Payzen",
-      "path": "flutter_payzen"
+      "name": "💻 Flutter Lyra",
+      "path": "flutter_lyra"
     },
     {
-      "name": "📱 Flutter Payzen Example",
-      "path": "flutter_payzen/example"
+      "name": "📱 Flutter Lyra Example",
+      "path": "flutter_lyra/example"
     },
     {
-      "name": "🤖 Payzen - Android",
-      "path": "flutter_payzen_android"
+      "name": "🤖 Lyra - Android",
+      "path": "flutter_lyra_android"
     },
     {
-      "name": "🍏 Payzen - iOS",
-      "path": "flutter_payzen_ios"
+      "name": "🍏 Lyra - iOS",
+      "path": "flutter_lyra_ios"
     },
     {
-      "name": "📚 Payzen - Platform Interface",
-      "path": "flutter_payzen_platform_interface"
+      "name": "📚 Lyra - Platform Interface",
+      "path": "flutter_lyra_platform_interface"
     },
     {
       "name": "🚀 Devops",
@@ -55,8 +55,7 @@
       "**/.dart_tool": true
     },
     "cSpell.words": [
-      "mocktail",
-      "payzen"
+      "mocktail"
     ],
     "java.configuration.updateBuildConfiguration": "interactive"
   },
@@ -64,25 +63,25 @@
     "version": "0.2.0",
     "configurations": [
       {
-      "name": "Flutter Payzen Example Debug",
+      "name": "Flutter Lyra Example Debug",
       "request": "launch",
       "type": "dart",
-      "cwd": "${workspaceFolder:📱 Flutter Payzen Example}",
+      "cwd": "${workspaceFolder:📱 Flutter Lyra Example}",
         "program": "lib/main.dart",
       },
       {
-      "name": "Flutter Payzen Example Profile",
+      "name": "Flutter Lyra Example Profile",
       "request": "launch",
       "type": "dart",
-      "cwd": "${workspaceFolder:📱 Flutter Payzen Example}",
+      "cwd": "${workspaceFolder:📱 Flutter Lyra Example}",
         "program": "lib/main.dart",
       "flutterMode": "profile",
       },
       {
-      "name": "Flutter Payzen Example Release",
+      "name": "Flutter Lyra Example Release",
       "request": "launch",
       "type": "dart",
-      "cwd": "${workspaceFolder:📱 Flutter Payzen Example}",
+      "cwd": "${workspaceFolder:📱 Flutter Lyra Example}",
         "program": "lib/main.dart",
       "flutterMode": "release",
       }

@@ -1,10 +1,10 @@
-name: flutter_payzen
+name: flutter_lyra
 
 packages:
-  - flutter_payzen
-  - flutter_payzen_android
-  - flutter_payzen_ios
-  - flutter_payzen_platform_interface
+  - flutter_lyra
+  - flutter_lyra_android
+  - flutter_lyra_ios
+  - flutter_lyra_platform_interface
 
 command:
   bootstrap:
