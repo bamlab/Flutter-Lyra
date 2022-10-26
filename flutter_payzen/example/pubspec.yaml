@@ -4,8 +4,7 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
-  flutter: ">=3.0.0"
+  sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -19,13 +18,9 @@ dependencies:
     path: ../
 
 dev_dependencies:
-  flutter_driver:
-    sdk: flutter
+  analyzer: ^4.7.0
   flutter_test:
     sdk: flutter
-  integration_test:
-    sdk: flutter
-  very_good_analysis: ^3.0.1
 
 flutter:
   uses-material-design: true

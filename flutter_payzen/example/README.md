@@ -1,3 +1,5 @@
-# flutter_payzen_example
+# Flutter-Payzen-Example
 
-Demonstrates how to use the flutter_payzen plugin.
+---
+
+Demonstrates how to use the `flutter_payzen` plugin.
