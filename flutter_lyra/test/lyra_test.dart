@@ -63,6 +63,13 @@ void main() {
           lyraKeyInterface.publicKey,
           lyraReceived.publicKey,
         );
+
+        expect(
+          LyraInitializeOptionsConverter.fromInterface(
+            lyraKeyInterface.options,
+          ),
+          lyraReceived.options,
+        );
       });
     });
 
