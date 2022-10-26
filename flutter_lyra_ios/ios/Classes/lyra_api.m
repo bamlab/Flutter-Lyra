@@ -176,4 +176,22 @@ void LyraHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<LyraH
       [channel setMessageHandler:nil];
     }
   }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.LyraHostApi.getFormTokenVersion"
+        binaryMessenger:binaryMessenger
+        codec:LyraHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(getFormTokenVersionWithCompletion:)], @"LyraHostApi api (%@) doesn't respond to @selector(getFormTokenVersionWithCompletion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        [api getFormTokenVersionWithCompletion:^(NSNumber *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult(output, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
 }
