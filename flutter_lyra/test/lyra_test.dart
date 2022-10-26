@@ -1,6 +1,6 @@
-import 'package:flutter_payzen/flutter_payzen.dart';
-import 'package:flutter_payzen/helpers/lyra_options_converter.dart';
-import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
+import 'package:flutter_lyra/flutter_lyra.dart';
+import 'package:flutter_lyra/helpers/lyra_options_converter.dart';
+import 'package:flutter_lyra_platform_interface/flutter_lyra_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -8,23 +8,23 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 mixin PlatformInterfaceMockMixin on Mock implements MockPlatformInterfaceMixin {
 }
 
-class MockFlutterPayzenPlatform extends Mock
+class MockFlutterLyraPlatform extends Mock
     with PlatformInterfaceMockMixin
-    implements FlutterPayzenPlatform {}
+    implements FlutterLyraPlatform {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('FlutterPayzen', () {
-    late FlutterPayzenPlatform flutterPayzenPlatform;
+  group('FlutterLyra', () {
+    late FlutterLyraPlatform flutterLyraPlatform;
 
     setUp(() {
-      flutterPayzenPlatform = MockFlutterPayzenPlatform();
-      FlutterPayzenPlatform.instance = flutterPayzenPlatform;
+      flutterLyraPlatform = MockFlutterLyraPlatform();
+      FlutterLyraPlatform.instance = flutterLyraPlatform;
     });
 
     group('initialize', () {
-      test('returns correct reachFive instance', () async {
+      test('returns correct lyra instance', () async {
         const publicKey = 'publicKey';
         const options = LyraInitializeOptions(
           apiServerName: 'apiServerName',
@@ -41,7 +41,7 @@ void main() {
           lyraKeyInterface.options,
         );
         when(
-          () => flutterPayzenPlatform.initialize(
+          () => flutterLyraPlatform.initialize(
             publicKey: publicKey,
             options: any(named: 'options'),
           ),

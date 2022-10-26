@@ -1,12 +1,12 @@
-import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
+import 'package:flutter_lyra_platform_interface/flutter_lyra_platform_interface.dart';
 
 import 'helpers/lyra_options_converter.dart';
 import 'models/lyra_initialize_options.dart';
 
-FlutterPayzenPlatform get _platform => FlutterPayzenPlatform.instance;
+FlutterLyraPlatform get _platform => FlutterLyraPlatform.instance;
 
-/// {@template flutter_payzen.lyra}
-/// [Lyra], class used to call every reachFive native sdk methods
+/// {@template flutter_lyra.lyra}
+/// [Lyra], class used to call every lyra native sdk methods
 /// {@endtemplate}
 class Lyra {
   /// [Lyra] default constructor
@@ -15,23 +15,23 @@ class Lyra {
     required this.options,
   });
 
-  /// @template flutter_payzen.lyra.publicKey}
+  /// @template flutter_lyra.lyra.publicKey}
   /// [Lyra] public key used when initializing the instance
   /// {@endtemplate}
   final String publicKey;
 
-  /// @template flutter_payzen.lyra.options}
+  /// @template flutter_lyra.lyra.options}
   /// [Lyra] list of options used when initializing the instance
   /// {@endtemplate}
   final LyraInitializeOptions options;
 }
 
-/// {@template flutter_payzen.lyraManager}
-/// ReachFiveManager, class used to initialize each instance of ReachFive
+/// {@template flutter_lyra.lyraManager}
+/// [LyraManager], class used to initialize each instance of [Lyra]
 /// {@endtemplate}
 class LyraManager {
-  /// {@template flutter_payzen.lyraManager.initialize}
-  /// initialize function used to create an instance of ReachFive
+  /// {@template flutter_lyra.lyraManager.initialize}
+  /// initialize function used to create an instance of [Lyra]
   /// {@endtemplate}
   Future<Lyra> initialize({
     required String publicKey,

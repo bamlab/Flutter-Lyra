@@ -1,4 +1,4 @@
-# Flutter-Payzen
+# Flutter-Lyra
 
 ---
 
@@ -33,11 +33,11 @@ platform :ios, '11.0'
 
 ---
 
-## About Payzen
+## About Lyra
 
-This sdk is the flutter interface implementation of the [android](https://github.com/lyra/android-sdk) and [ios](https://github.com/lyra/ios-sdk) sdks of Payzen
+This sdk is the flutter interface implementation of the [android](https://github.com/lyra/android-sdk) and [ios](https://github.com/lyra/ios-sdk) sdks of Lyra
 
-If you want more informations about Payzen, here is their [website](https://payzen.io/fr-FR/)
+If you want more informations about Lyra, here is their [website](https://payzen.io/fr-FR/)
 
 ---
 

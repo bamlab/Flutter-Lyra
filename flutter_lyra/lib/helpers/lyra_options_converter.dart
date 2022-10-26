@@ -1,6 +1,6 @@
-import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
+import 'package:flutter_lyra_platform_interface/flutter_lyra_platform_interface.dart';
 
-import '../flutter_payzen.dart';
+import '../flutter_lyra.dart';
 
 /// Used to be the link between the [LyraInitializeOptionsInterface]
 /// and the [LyraInitializeOptions] exported from this package

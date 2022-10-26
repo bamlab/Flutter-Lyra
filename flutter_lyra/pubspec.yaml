@@ -1,5 +1,5 @@
-name: flutter_payzen
-description: Flutter Payzen
+name: flutter_lyra
+description: Flutter Lyra
 version: 0.1.0+1
 publish_to: none
 
@@ -11,18 +11,18 @@ flutter:
   plugin:
     platforms:
       android:
-        default_package: flutter_payzen_android
+        default_package: flutter_lyra_android
       ios:
-        default_package: flutter_payzen_ios
+        default_package: flutter_lyra_ios
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_payzen_android:
+  flutter_lyra_android:
     path: ^0.1.0+1
-  flutter_payzen_ios:
+  flutter_lyra_ios:
     path: ^0.1.0+1
-  flutter_payzen_platform_interface:
+  flutter_lyra_platform_interface:
     path: ^0.1.0+1
 
 dev_dependencies:
