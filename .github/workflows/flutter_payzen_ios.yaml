@@ -1,23 +1,23 @@
-name: Test Flutter Payzen iOS
+name: Test Flutter Lyra iOS
 
 on:
   push:
     paths:
-      - "flutter_payzen_ios/**"
-      - ".github/workflows/flutter_payzen_ios.yaml"
+      - "flutter_lyra_ios/**"
+      - ".github/workflows/flutter_lyra_ios.yaml"
     branches:
       - main
   pull_request:
     paths:
-      - "flutter_payzen_ios/**"
-      - ".github/workflows/flutter_payzen_ios.yaml"
+      - "flutter_lyra_ios/**"
+      - ".github/workflows/flutter_lyra_ios.yaml"
     branches:
       - main
 
 jobs:
   test:
     strategy:
-      matrix: {dir: ["flutter_payzen_ios"]}
+      matrix: {dir: ["flutter_lyra_ios"]}
     runs-on: ubuntu-20.04
     defaults:
       run:
