@@ -1,24 +1,24 @@
-import 'package:flutter_payzen_platform_interface/flutter_payzen_platform_interface.dart';
+import 'package:flutter_lyra_platform_interface/flutter_lyra_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockPayzenHostApi extends Mock implements PayzenHostApi {}
 
-class TestFlutterPayzen extends FlutterPayzenPlatform {}
+class TestFlutterLyra extends FlutterLyraPlatform {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  group('FlutterPayzenPlatformInterface', () {
-    late FlutterPayzenPlatform flutterPayzenPlatform;
+  group('FlutterLyraPlatformInterface', () {
+    late FlutterLyraPlatform flutterLyraPlatform;
     late PayzenHostApi mockPayzenHostApi;
 
     setUp(() {
-      flutterPayzenPlatform = TestFlutterPayzen();
-      FlutterPayzenPlatform.instance = flutterPayzenPlatform;
+      flutterLyraPlatform = TestFlutterLyra();
+      FlutterLyraPlatform.instance = flutterLyraPlatform;
 
       mockPayzenHostApi = MockPayzenHostApi();
 
-      flutterPayzenPlatform.payzenHostApi = mockPayzenHostApi;
+      flutterLyraPlatform.payzenHostApi = mockPayzenHostApi;
     });
 
     tearDown(() {
@@ -42,7 +42,7 @@ void main() {
             .thenAnswer((_) async => lyraKeyInterface);
 
         final receivedLyraKeyInterface =
-            await FlutterPayzenPlatform.instance.initialize(
+            await FlutterLyraPlatform.instance.initialize(
           publicKey: publicKey,
           options: options,
         );

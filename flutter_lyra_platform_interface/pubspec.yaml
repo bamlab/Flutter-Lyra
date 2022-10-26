@@ -1,5 +1,5 @@
-name: flutter_payzen_platform_interface
-description: A common platform interface for the flutter_payzen plugin.
+name: flutter_lyra_platform_interface
+description: A common platform interface for the flutter_lyra plugin.
 version: 0.1.0+1
 
 environment:
