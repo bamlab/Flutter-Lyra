@@ -1,4 +1,4 @@
-package tech.bam.flutter_payzen.android
+package tech.bam.flutter_lyra.android
 
 class FlutterError constructor(code: String, message: String?, details: Any?) :
     RuntimeException(message) {

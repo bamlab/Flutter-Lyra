@@ -1,25 +1,25 @@
-package tech.bam.flutter_payzen.android
+package tech.bam.flutter_lyra.android
 
 import com.lyra.sdk.Lyra
 import android.content.Context
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 
-class FlutterPayzenPlugin : FlutterPlugin, PayzenApi.PayzenHostApi
+class FlutterLyraPlugin : FlutterPlugin, LyraApi.LyraHostApi
 {
   private var context: Context? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        PayzenApi.PayzenHostApi.setup(flutterPluginBinding.binaryMessenger, this)
+        LyraApi.LyraHostApi.setup(flutterPluginBinding.binaryMessenger, this)
         context = flutterPluginBinding.applicationContext
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        PayzenApi.PayzenHostApi.setup(binding.binaryMessenger, null)
+        LyraApi.LyraHostApi.setup(binding.binaryMessenger, null)
     }
 
     override fun initialize(
-        lyraKey: PayzenApi.LyraKeyInterface,
-        result: PayzenApi.Result<PayzenApi.LyraKeyInterface>
+        lyraKey: LyraApi.LyraKeyInterface,
+        result: LyraApi.Result<LyraApi.LyraKeyInterface>
     ) {
         val context = this.context
 

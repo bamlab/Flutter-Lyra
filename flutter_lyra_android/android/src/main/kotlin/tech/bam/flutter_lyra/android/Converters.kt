@@ -1,11 +1,11 @@
-package tech.bam.flutter_payzen.android
+package tech.bam.flutter_lyra.android
 
 import com.lyra.sdk.Lyra
 
 class Converters {
     companion object {
         fun initializeOptionsFromInterface(
-            optionsInterface: PayzenApi.LyraInitializeOptionsInterface
+            optionsInterface: LyraApi.LyraInitializeOptionsInterface
         ): HashMap<String, Any> {
             val options = HashMap<String, Any>()
 

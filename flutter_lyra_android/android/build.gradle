@@ -1,4 +1,4 @@
-group 'tech.bam.flutter_payzen'
+group 'tech.bam.flutter_lyra'
 version '1.0-SNAPSHOT'
 
 buildscript {
