@@ -187,6 +187,7 @@ public class LyraApi {
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface LyraHostApi {
     void initialize(@NonNull LyraKeyInterface lyraKey, Result<LyraKeyInterface> result);
+    void getFormTokenVersion(Result<Long> result);
 
     /** The codec used by LyraHostApi. */
     static MessageCodec<Object> getCodec() {
@@ -218,6 +219,35 @@ public class LyraApi {
               };
 
               api.initialize(lyraKeyArg, resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.LyraHostApi.getFormTokenVersion", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              Result<Long> resultCallback = new Result<Long>() {
+                public void success(Long result) {
+                  wrapped.put("result", result);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.getFormTokenVersion(resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));

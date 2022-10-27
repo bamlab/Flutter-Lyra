@@ -7,6 +7,10 @@ FlutterLyraPlatform get _platform => FlutterLyraPlatform.instance;
 
 /// {@template flutter_lyra.lyra}
 /// [Lyra], class used to call every lyra native sdk methods
+///
+/// There is only one native instance of [Lyra]
+/// So every flutter instance created with this constructor
+/// use the same native [Lyra] instance
 /// {@endtemplate}
 class Lyra {
   /// [Lyra] default constructor
@@ -24,6 +28,17 @@ class Lyra {
   /// [Lyra] list of options used when initializing the instance
   /// {@endtemplate}
   final LyraInitializeOptions options;
+
+  /// @template flutter_lyra.lyra.getFormTokenVersion}
+  /// Get the form token version link to this sdk version
+  ///
+  /// You need to add it to your paiement request
+  /// {@endtemplate}
+  Future<int> getFormTokenVersion() async {
+    final formTokenVersion = await _platform.getFormTokenVersion();
+
+    return formTokenVersion;
+  }
 }
 
 /// {@template flutter_lyra.lyraManager}
@@ -32,6 +47,11 @@ class Lyra {
 class LyraManager {
   /// {@template flutter_lyra.lyraManager.initialize}
   /// initialize function used to create an instance of [Lyra]
+  ///
+  /// on Android, this function can throw an uncatchable error
+  /// Be sure to give the correct publicKey and options
+  /// (It won't throw any errors if you are not connected to internet)
+  // TODO: catch the errors on Android
   /// {@endtemplate}
   Future<Lyra> initialize({
     required String publicKey,

@@ -1,5 +1,7 @@
+import 'package:equatable/equatable.dart';
+
 /// List of the lyra options you can use during lyra initialization
-class LyraInitializeOptions {
+class LyraInitializeOptions extends Equatable {
   /// [LyraInitializeOptions] default constructor
   const LyraInitializeOptions({
     required this.apiServerName,
@@ -24,4 +26,11 @@ class LyraInitializeOptions {
   /// on Android, cards-camera-recognizer dependency
   /// must be added on gradle file
   final bool? cardScanningEnabled;
+
+  @override
+  List<Object?> get props => [
+        apiServerName,
+        nfcEnabled,
+        cardScanningEnabled,
+      ];
 }

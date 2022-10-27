@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lyra/flutter_lyra.dart';
 
 import '../const.dart';
+import '../methods/get_form_token_version.dart';
 import '../methods/initialize_method.dart';
 
 enum LyraMethod {
   initialize,
+  getFormTokenVersion,
 }
 
 class LyraMethodsView extends StatefulWidget {
@@ -35,6 +37,12 @@ class _LyraMethodsViewState extends State<LyraMethodsView>
 
   void setLyra(Lyra newLyra) => setState(() {
         lyra = newLyra;
+      });
+
+  int? formTokenVersion;
+
+  void setFormTokenVersion(int newFormTokenVersion) => setState(() {
+        formTokenVersion = newFormTokenVersion;
       });
 
   @override
@@ -67,6 +75,8 @@ class _LyraMethodsViewState extends State<LyraMethodsView>
               lyraMethod: selectedLyraMethod,
               lyra: lyra,
               setLyra: setLyra,
+              formTokenVersion: formTokenVersion,
+              setFormTokenVersion: setFormTokenVersion,
             ),
           ),
         ],
@@ -81,6 +91,8 @@ class _LyraMethodView extends StatelessWidget {
     required this.lyraMethod,
     required this.lyra,
     required this.setLyra,
+    required this.formTokenVersion,
+    required this.setFormTokenVersion,
   });
 
   final DataSet dataSet;
@@ -89,6 +101,9 @@ class _LyraMethodView extends StatelessWidget {
 
   final Lyra? lyra;
   final void Function(Lyra) setLyra;
+
+  final int? formTokenVersion;
+  final void Function(int) setFormTokenVersion;
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +117,16 @@ class _LyraMethodView extends StatelessWidget {
           lyra: lyra,
           setLyra: setLyra,
         );
+      case LyraMethod.getFormTokenVersion:
+        if (lyra != null) {
+          return GetFormTokenVersionMethod(
+            dataSet: dataSet,
+            lyra: lyra,
+            formTokenVersion: formTokenVersion,
+            setFormTokenVersion: setFormTokenVersion,
+          );
+        }
+        return const Text('You should initialize Lyra');
     }
   }
 }

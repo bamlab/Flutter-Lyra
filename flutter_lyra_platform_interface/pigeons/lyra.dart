@@ -39,4 +39,7 @@ class LyraKeyInterface {
 abstract class LyraHostApi {
   @async
   LyraKeyInterface initialize(LyraKeyInterface lyraKey);
+
+  @async
+  int getFormTokenVersion();
 }
