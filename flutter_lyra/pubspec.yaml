@@ -1,7 +1,8 @@
 name: flutter_lyra
-description: Flutter Lyra
-version: 0.1.0+1
-publish_to: none
+description: This package allows you to use the methods from the lyra android and ios native sdks in Flutter
+version: 0.1.0
+homepage: https://github.com/bamlab/Flutter-Lyra
+repository: https://github.com/bamlab/Flutter-Lyra
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -19,12 +20,9 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_lyra_android:
-    path: ^0.1.0+1
-  flutter_lyra_ios:
-    path: ^0.1.0+1
-  flutter_lyra_platform_interface:
-    path: ^0.1.0+1
+  flutter_lyra_android: ^0.1.0
+  flutter_lyra_ios: ^0.1.0
+  flutter_lyra_platform_interface: ^0.1.0
 
 dev_dependencies:
   analyzer: ^4.7.0
