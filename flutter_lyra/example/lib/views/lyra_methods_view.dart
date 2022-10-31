@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lyra/flutter_lyra.dart';
 
 import '../const.dart';
-import '../methods/get_form_token_version.dart';
+import '../methods/get_form_token_version_method.dart';
 import '../methods/initialize_method.dart';
 
 enum LyraMethod {
