@@ -64,5 +64,20 @@ void main() {
         expect(formTokenVersion, receivedFormTokenVersion);
       });
     });
+
+    group('process', () {
+      test('returns correct lyra response string', () async {
+        const formToken = 'formToken';
+        const lyraResponse = 'lyraResponse';
+
+        when(() => mockLyraHostApi.process(formToken))
+            .thenAnswer((_) async => lyraResponse);
+
+        final receivedLyraResponse =
+            await FlutterLyraPlatform.instance.process(formToken);
+
+        expect(lyraResponse, receivedLyraResponse);
+      });
+    });
   });
 }

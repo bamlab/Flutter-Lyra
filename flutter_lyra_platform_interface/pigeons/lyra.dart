@@ -42,4 +42,7 @@ abstract class LyraHostApi {
 
   @async
   int getFormTokenVersion();
+
+  @async
+  String process(String formToken);
 }
