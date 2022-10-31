@@ -188,6 +188,7 @@ public class LyraApi {
   public interface LyraHostApi {
     void initialize(@NonNull LyraKeyInterface lyraKey, Result<LyraKeyInterface> result);
     void getFormTokenVersion(Result<Long> result);
+    void process(@NonNull String formToken, Result<String> result);
 
     /** The codec used by LyraHostApi. */
     static MessageCodec<Object> getCodec() {
@@ -248,6 +249,41 @@ public class LyraApi {
               };
 
               api.getFormTokenVersion(resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.LyraHostApi.process", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              assert args != null;
+              String formTokenArg = (String)args.get(0);
+              if (formTokenArg == null) {
+                throw new NullPointerException("formTokenArg unexpectedly null.");
+              }
+              Result<String> resultCallback = new Result<String>() {
+                public void success(String result) {
+                  wrapped.put("result", result);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.process(formTokenArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));
