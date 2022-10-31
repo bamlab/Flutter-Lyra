@@ -37,6 +37,7 @@ NSObject<FlutterMessageCodec> *LyraHostApiGetCodec(void);
 @protocol LyraHostApi
 - (void)initializeLyraKey:(LyraKeyInterface *)lyraKey completion:(void(^)(LyraKeyInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)getFormTokenVersionWithCompletion:(void(^)(NSNumber *_Nullable, FlutterError *_Nullable))completion;
+- (void)processFormToken:(NSString *)formToken completion:(void(^)(NSString *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void LyraHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<LyraHostApi> *_Nullable api);
