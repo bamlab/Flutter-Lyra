@@ -5,11 +5,13 @@ import '../const.dart';
 import '../methods/get_form_token_method.dart';
 import '../methods/get_form_token_version_method.dart';
 import '../methods/initialize_method.dart';
+import '../methods/process_method.dart';
 
 enum LyraMethod {
   initialize,
   getFormTokenVersion,
   getFormToken,
+  process,
 }
 
 class LyraMethodsView extends StatefulWidget {
@@ -125,6 +127,7 @@ class _LyraMethodView extends StatelessWidget {
     final lyraMethod = this.lyraMethod;
     final lyra = this.lyra;
     final formTokenVersion = this.formTokenVersion;
+    final formToken = this.formToken;
 
     switch (lyraMethod) {
       case LyraMethod.initialize:
@@ -153,6 +156,15 @@ class _LyraMethodView extends StatelessWidget {
           );
         }
         return const Text('You should get the form token version first');
+      case LyraMethod.process:
+        if (lyra != null && formToken != null) {
+          return ProcessMethod(
+            dataSet: dataSet,
+            lyra: lyra,
+            formToken: formToken,
+          );
+        }
+        return const Text('You should get the form token first');
     }
   }
 }
