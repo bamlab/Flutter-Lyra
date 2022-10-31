@@ -91,5 +91,25 @@ void main() {
         );
       });
     });
+
+    group('process', () {
+      test('returns correct lyra response string', () async {
+        const formToken = 'formToken';
+        const lyraResponse = 'lyraResponse';
+
+        when(
+          () => flutterLyraPlatform.process(formToken),
+        ).thenAnswer(
+          (_) async => lyraResponse,
+        );
+
+        final receivedLyraResponse = await lyra.process(formToken);
+
+        expect(
+          lyraResponse,
+          receivedLyraResponse,
+        );
+      });
+    });
   });
 }

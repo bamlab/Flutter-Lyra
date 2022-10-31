@@ -39,6 +39,11 @@ class Lyra {
 
     return formTokenVersion;
   }
+
+  /// @template flutter_lyra.lyra.process}
+  /// Process the paiement
+  /// {@endtemplate}
+  Future<String> process(String formToken) => _platform.process(formToken);
 }
 
 /// {@template flutter_lyra.lyraManager}
