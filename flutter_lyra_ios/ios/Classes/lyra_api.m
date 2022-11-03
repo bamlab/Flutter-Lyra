@@ -31,6 +31,11 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 
 
+@interface ErrorCodesInterface ()
++ (ErrorCodesInterface *)fromMap:(NSDictionary *)dict;
++ (nullable ErrorCodesInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 @interface LyraInitializeOptionsInterface ()
 + (LyraInitializeOptionsInterface *)fromMap:(NSDictionary *)dict;
 + (nullable LyraInitializeOptionsInterface *)nullableFromMap:(NSDictionary *)dict;
@@ -40,6 +45,31 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (LyraKeyInterface *)fromMap:(NSDictionary *)dict;
 + (nullable LyraKeyInterface *)nullableFromMap:(NSDictionary *)dict;
 - (NSDictionary *)toMap;
+@end
+@interface ProcessRequestInterface ()
++ (ProcessRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable ProcessRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
+
+@implementation ErrorCodesInterface
++ (instancetype)makeWithPaymentCancelledByUser:(NSString *)paymentCancelledByUser {
+  ErrorCodesInterface* pigeonResult = [[ErrorCodesInterface alloc] init];
+  pigeonResult.paymentCancelledByUser = paymentCancelledByUser;
+  return pigeonResult;
+}
++ (ErrorCodesInterface *)fromMap:(NSDictionary *)dict {
+  ErrorCodesInterface *pigeonResult = [[ErrorCodesInterface alloc] init];
+  pigeonResult.paymentCancelledByUser = GetNullableObject(dict, @"paymentCancelledByUser");
+  NSAssert(pigeonResult.paymentCancelledByUser != nil, @"");
+  return pigeonResult;
+}
++ (nullable ErrorCodesInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ErrorCodesInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"paymentCancelledByUser" : (self.paymentCancelledByUser ?: [NSNull null]),
+  };
+}
 @end
 
 @implementation LyraInitializeOptionsInterface
@@ -95,6 +125,31 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 @end
 
+@implementation ProcessRequestInterface
++ (instancetype)makeWithFormToken:(NSString *)formToken
+    errorCodes:(ErrorCodesInterface *)errorCodes {
+  ProcessRequestInterface* pigeonResult = [[ProcessRequestInterface alloc] init];
+  pigeonResult.formToken = formToken;
+  pigeonResult.errorCodes = errorCodes;
+  return pigeonResult;
+}
++ (ProcessRequestInterface *)fromMap:(NSDictionary *)dict {
+  ProcessRequestInterface *pigeonResult = [[ProcessRequestInterface alloc] init];
+  pigeonResult.formToken = GetNullableObject(dict, @"formToken");
+  NSAssert(pigeonResult.formToken != nil, @"");
+  pigeonResult.errorCodes = [ErrorCodesInterface nullableFromMap:GetNullableObject(dict, @"errorCodes")];
+  NSAssert(pigeonResult.errorCodes != nil, @"");
+  return pigeonResult;
+}
++ (nullable ProcessRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ProcessRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"formToken" : (self.formToken ?: [NSNull null]),
+    @"errorCodes" : (self.errorCodes ? [self.errorCodes toMap] : [NSNull null]),
+  };
+}
+@end
+
 @interface LyraHostApiCodecReader : FlutterStandardReader
 @end
 @implementation LyraHostApiCodecReader
@@ -102,10 +157,16 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 {
   switch (type) {
     case 128:     
-      return [LyraInitializeOptionsInterface fromMap:[self readValue]];
+      return [ErrorCodesInterface fromMap:[self readValue]];
     
     case 129:     
+      return [LyraInitializeOptionsInterface fromMap:[self readValue]];
+    
+    case 130:     
       return [LyraKeyInterface fromMap:[self readValue]];
+    
+    case 131:     
+      return [ProcessRequestInterface fromMap:[self readValue]];
     
     default:    
       return [super readValueOfType:type];
@@ -119,12 +180,20 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @implementation LyraHostApiCodecWriter
 - (void)writeValue:(id)value 
 {
-  if ([value isKindOfClass:[LyraInitializeOptionsInterface class]]) {
+  if ([value isKindOfClass:[ErrorCodesInterface class]]) {
     [self writeByte:128];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[LyraKeyInterface class]]) {
+  if ([value isKindOfClass:[LyraInitializeOptionsInterface class]]) {
     [self writeByte:129];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[LyraKeyInterface class]]) {
+    [self writeByte:130];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[ProcessRequestInterface class]]) {
+    [self writeByte:131];
     [self writeValue:[value toMap]];
   } else 
 {
@@ -186,6 +255,26 @@ void LyraHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<LyraH
       NSCAssert([api respondsToSelector:@selector(getFormTokenVersionWithCompletion:)], @"LyraHostApi api (%@) doesn't respond to @selector(getFormTokenVersionWithCompletion:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         [api getFormTokenVersionWithCompletion:^(NSNumber *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult(output, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.LyraHostApi.process"
+        binaryMessenger:binaryMessenger
+        codec:LyraHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(processRequest:completion:)], @"LyraHostApi api (%@) doesn't respond to @selector(processRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        ProcessRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api processRequest:arg_request completion:^(NSString *_Nullable output, FlutterError *_Nullable error) {
           callback(wrapResult(output, error));
         }];
       }];

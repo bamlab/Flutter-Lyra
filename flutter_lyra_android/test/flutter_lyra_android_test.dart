@@ -39,5 +39,55 @@ void main() {
       FlutterLyraAndroid.registerWith();
       expect(FlutterLyraPlatform.instance, isA<FlutterLyraAndroid>());
     });
+
+    group('can parse an error', () {
+      test('random error', () {
+        final exception = Exception();
+
+        Object? error;
+
+        try {
+          FlutterLyraAndroid()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(exception, error);
+      });
+
+      test('random platform exception', () {
+        final exception = PlatformException(code: 'code');
+
+        Object? error;
+
+        try {
+          FlutterLyraAndroid()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(exception, error);
+      });
+
+      test('$PaymentCancelledByUserExceptionInterface', () {
+        final exception = PlatformException(
+          code: 'code',
+          message: errorCodesInterface.paymentCancelledByUser,
+        );
+
+        Object? error;
+
+        try {
+          FlutterLyraAndroid()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<PaymentCancelledByUserExceptionInterface>());
+      });
+    });
   });
 }

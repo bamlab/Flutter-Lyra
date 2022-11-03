@@ -8,8 +8,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class ErrorCodesInterface;
 @class LyraInitializeOptionsInterface;
 @class LyraKeyInterface;
+@class ProcessRequestInterface;
+
+@interface ErrorCodesInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithPaymentCancelledByUser:(NSString *)paymentCancelledByUser;
+@property(nonatomic, copy) NSString * paymentCancelledByUser;
+@end
 
 @interface LyraInitializeOptionsInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
@@ -31,12 +40,22 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) LyraInitializeOptionsInterface * options;
 @end
 
+@interface ProcessRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithFormToken:(NSString *)formToken
+    errorCodes:(ErrorCodesInterface *)errorCodes;
+@property(nonatomic, copy) NSString * formToken;
+@property(nonatomic, strong) ErrorCodesInterface * errorCodes;
+@end
+
 /// The codec used by LyraHostApi.
 NSObject<FlutterMessageCodec> *LyraHostApiGetCodec(void);
 
 @protocol LyraHostApi
 - (void)initializeLyraKey:(LyraKeyInterface *)lyraKey completion:(void(^)(LyraKeyInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)getFormTokenVersionWithCompletion:(void(^)(NSNumber *_Nullable, FlutterError *_Nullable))completion;
+- (void)processRequest:(ProcessRequestInterface *)request completion:(void(^)(NSString *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void LyraHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<LyraHostApi> *_Nullable api);

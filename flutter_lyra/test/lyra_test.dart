@@ -91,5 +91,46 @@ void main() {
         );
       });
     });
+
+    group('process', () {
+      test('returns correct lyra response string', () async {
+        const formToken = 'formToken';
+        const lyraResponse = 'lyraResponse';
+
+        when(
+          () => flutterLyraPlatform.process(formToken),
+        ).thenAnswer(
+          (_) async => lyraResponse,
+        );
+
+        final receivedLyraResponse = await lyra.process(formToken);
+
+        expect(
+          lyraResponse,
+          receivedLyraResponse,
+        );
+      });
+
+      test('parse throw error', () async {
+        const formToken = 'formToken';
+
+        when(
+          () => flutterLyraPlatform.process(formToken),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(
+          StackTrace.fromString('test'),
+        );
+        when(
+          () => flutterLyraPlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await lyra.process(formToken);
+        } catch (_) {}
+
+        verify(() => flutterLyraPlatform.parseError(any(), any())).called(1);
+      });
+    });
   });
 }

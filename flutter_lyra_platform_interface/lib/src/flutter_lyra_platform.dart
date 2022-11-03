@@ -46,6 +46,9 @@ abstract class FlutterLyraPlatform extends PlatformInterface {
     _lyraHostApi = newLyraHostApi;
   }
 
+  /// method used to parse the error on the differents platform
+  Never parseError(Object error, StackTrace stackTrace);
+
   /// {@macro flutter_lyra.lyraManager.initialize}
   Future<LyraKeyInterface> initialize({
     required String publicKey,
@@ -54,6 +57,14 @@ abstract class FlutterLyraPlatform extends PlatformInterface {
       lyraHostApi
           .initialize(LyraKeyInterface(publicKey: publicKey, options: options));
 
-  /// {@macro flutter_lyra.lyraManager.getFormTokenVersion}
+  /// {@macro flutter_lyra.lyra.getFormTokenVersion}
   Future<int> getFormTokenVersion() => lyraHostApi.getFormTokenVersion();
+
+  /// {@macro flutter_lyra.lyra.process}
+  Future<String> process(String formToken) => lyraHostApi.process(
+        ProcessRequestInterface(
+          formToken: formToken,
+          errorCodes: errorCodesInterface,
+        ),
+      );
 }

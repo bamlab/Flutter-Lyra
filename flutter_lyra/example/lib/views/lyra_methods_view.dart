@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lyra/flutter_lyra.dart';
 
 import '../const.dart';
-import '../methods/get_form_token_version.dart';
+import '../methods/get_form_token_method.dart';
+import '../methods/get_form_token_version_method.dart';
 import '../methods/initialize_method.dart';
+import '../methods/process_method.dart';
 
 enum LyraMethod {
   initialize,
   getFormTokenVersion,
+  getFormToken,
+  process,
 }
 
 class LyraMethodsView extends StatefulWidget {
@@ -45,6 +49,12 @@ class _LyraMethodsViewState extends State<LyraMethodsView>
         formTokenVersion = newFormTokenVersion;
       });
 
+  String? formToken;
+
+  void setFormToken(String newFormToken) => setState(() {
+        formToken = newFormToken;
+      });
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -77,6 +87,8 @@ class _LyraMethodsViewState extends State<LyraMethodsView>
               setLyra: setLyra,
               formTokenVersion: formTokenVersion,
               setFormTokenVersion: setFormTokenVersion,
+              formToken: formToken,
+              setFormToken: setFormToken,
             ),
           ),
         ],
@@ -93,6 +105,8 @@ class _LyraMethodView extends StatelessWidget {
     required this.setLyra,
     required this.formTokenVersion,
     required this.setFormTokenVersion,
+    required this.formToken,
+    required this.setFormToken,
   });
 
   final DataSet dataSet;
@@ -105,10 +119,15 @@ class _LyraMethodView extends StatelessWidget {
   final int? formTokenVersion;
   final void Function(int) setFormTokenVersion;
 
+  final String? formToken;
+  final void Function(String) setFormToken;
+
   @override
   Widget build(BuildContext context) {
     final lyraMethod = this.lyraMethod;
     final lyra = this.lyra;
+    final formTokenVersion = this.formTokenVersion;
+    final formToken = this.formToken;
 
     switch (lyraMethod) {
       case LyraMethod.initialize:
@@ -127,6 +146,25 @@ class _LyraMethodView extends StatelessWidget {
           );
         }
         return const Text('You should initialize Lyra');
+      case LyraMethod.getFormToken:
+        if (formTokenVersion != null) {
+          return GetFormTokenMethod(
+            dataSet: dataSet,
+            formTokenVersion: formTokenVersion,
+            formToken: formToken,
+            setFormToken: setFormToken,
+          );
+        }
+        return const Text('You should get the form token version first');
+      case LyraMethod.process:
+        if (lyra != null && formToken != null) {
+          return ProcessMethod(
+            dataSet: dataSet,
+            lyra: lyra,
+            formToken: formToken,
+          );
+        }
+        return const Text('You should get the form token first');
     }
   }
 }

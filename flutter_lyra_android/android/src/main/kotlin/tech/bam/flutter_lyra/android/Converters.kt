@@ -1,9 +1,25 @@
 package tech.bam.flutter_lyra.android
 
 import com.lyra.sdk.Lyra
+import com.lyra.sdk.exception.LyraException
 
 class Converters {
     companion object {
+        fun parseError(
+            lyraError: LyraException,
+            errorCodesInterface: LyraApi.ErrorCodesInterface,
+            defaultFlutterError: FlutterError
+        ): FlutterError {
+            if (lyraError.errorCode == "MOB_009") {
+                return FlutterError(
+                    code = lyraError.errorCode,
+                    message = "${errorCodesInterface.paymentCancelledByUser} - ${lyraError.errorMessage}",
+                    details = null
+                )
+            }
+            return defaultFlutterError
+        }
+
         fun initializeOptionsFromInterface(
             optionsInterface: LyraApi.LyraInitializeOptionsInterface
         ): HashMap<String, Any> {
