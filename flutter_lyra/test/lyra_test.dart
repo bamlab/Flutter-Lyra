@@ -110,6 +110,27 @@ void main() {
           receivedLyraResponse,
         );
       });
+
+      test('parse throw error', () async {
+        const formToken = 'formToken';
+
+        when(
+          () => flutterLyraPlatform.process(formToken),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(
+          StackTrace.fromString('test'),
+        );
+        when(
+          () => flutterLyraPlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await lyra.process(formToken);
+        } catch (_) {}
+
+        verify(() => flutterLyraPlatform.parseError(any(), any())).called(1);
+      });
     });
   });
 }

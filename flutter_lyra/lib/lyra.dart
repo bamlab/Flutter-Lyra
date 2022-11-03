@@ -1,5 +1,6 @@
 import 'package:flutter_lyra_platform_interface/flutter_lyra_platform_interface.dart';
 
+import 'helpers/adapt_errors.dart';
 import 'helpers/lyra_options_converter.dart';
 import 'models/lyra_initialize_options.dart';
 
@@ -43,7 +44,22 @@ class Lyra {
   /// @template flutter_lyra.lyra.process}
   /// Process the paiement
   /// {@endtemplate}
-  Future<String> process(String formToken) => _platform.process(formToken);
+  Future<String> process(String formToken) async {
+    try {
+      final lyraResponse = await _platform.process(formToken);
+
+      return lyraResponse;
+    } catch (error, stackTrace) {
+      try {
+        _platform.parseError(error, stackTrace);
+      } catch (interfaceError, interfaceStackTrace) {
+        adaptErrors(
+          error: interfaceError,
+          stackTrace: interfaceStackTrace,
+        );
+      }
+    }
+  }
 }
 
 /// {@template flutter_lyra.lyraManager}
