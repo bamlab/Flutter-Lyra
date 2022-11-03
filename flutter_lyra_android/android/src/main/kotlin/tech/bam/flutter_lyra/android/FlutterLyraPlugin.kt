@@ -90,7 +90,7 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
         result.success(formTokenVersion.toLong())
     }
 
-    override fun process(formToken: String, result: LyraApi.Result<String>) {
+    override fun process(request: LyraApi.ProcessRequestInterface, result: LyraApi.Result<String>) {
         if (lyraKey == null) {
             result.error(
                 FlutterError(
@@ -118,7 +118,7 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
         try {
             Lyra.process(
                 fragmentManager = flutterActivity.supportFragmentManager,
-                formToken = formToken,
+                formToken = request.formToken,
                 lyraHandler = object : LyraHandler {
                     override fun onSuccess(lyraResponse: LyraResponse) {
                         result.success(lyraResponse.toString())
@@ -126,10 +126,14 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
 
                     override fun onError(lyraException: LyraException, lyraResponse: LyraResponse?) {
                         result.error(
-                            FlutterError(
-                                code = "process_error_code",
-                                message = lyraException.message,
-                                details = null
+                            Converters.parseError(
+                                lyraError = lyraException,
+                                errorCodesInterface = request.errorCodes,
+                                defaultFlutterError = FlutterError(
+                                    code = "process_error_code",
+                                    message = lyraException.message,
+                                    details = null
+                                )
                             )
                         )
                     }

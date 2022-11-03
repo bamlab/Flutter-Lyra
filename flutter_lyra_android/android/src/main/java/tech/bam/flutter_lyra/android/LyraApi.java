@@ -24,6 +24,44 @@ import java.util.HashMap;
 public class LyraApi {
 
   /** Generated class from Pigeon that represents data sent in messages. */
+  public static class ErrorCodesInterface {
+    private @NonNull String paymentCancelledByUser;
+    public @NonNull String getPaymentCancelledByUser() { return paymentCancelledByUser; }
+    public void setPaymentCancelledByUser(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"paymentCancelledByUser\" is null.");
+      }
+      this.paymentCancelledByUser = setterArg;
+    }
+
+    /**Constructor is private to enforce null safety; use Builder. */
+    private ErrorCodesInterface() {}
+    public static final class Builder {
+      private @Nullable String paymentCancelledByUser;
+      public @NonNull Builder setPaymentCancelledByUser(@NonNull String setterArg) {
+        this.paymentCancelledByUser = setterArg;
+        return this;
+      }
+      public @NonNull ErrorCodesInterface build() {
+        ErrorCodesInterface pigeonReturn = new ErrorCodesInterface();
+        pigeonReturn.setPaymentCancelledByUser(paymentCancelledByUser);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("paymentCancelledByUser", paymentCancelledByUser);
+      return toMapResult;
+    }
+    static @NonNull ErrorCodesInterface fromMap(@NonNull Map<String, Object> map) {
+      ErrorCodesInterface pigeonResult = new ErrorCodesInterface();
+      Object paymentCancelledByUser = map.get("paymentCancelledByUser");
+      pigeonResult.setPaymentCancelledByUser((String)paymentCancelledByUser);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
   public static class LyraInitializeOptionsInterface {
     private @NonNull String apiServerName;
     public @NonNull String getApiServerName() { return apiServerName; }
@@ -147,6 +185,62 @@ public class LyraApi {
     }
   }
 
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class ProcessRequestInterface {
+    private @NonNull String formToken;
+    public @NonNull String getFormToken() { return formToken; }
+    public void setFormToken(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"formToken\" is null.");
+      }
+      this.formToken = setterArg;
+    }
+
+    private @NonNull ErrorCodesInterface errorCodes;
+    public @NonNull ErrorCodesInterface getErrorCodes() { return errorCodes; }
+    public void setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errorCodes\" is null.");
+      }
+      this.errorCodes = setterArg;
+    }
+
+    /**Constructor is private to enforce null safety; use Builder. */
+    private ProcessRequestInterface() {}
+    public static final class Builder {
+      private @Nullable String formToken;
+      public @NonNull Builder setFormToken(@NonNull String setterArg) {
+        this.formToken = setterArg;
+        return this;
+      }
+      private @Nullable ErrorCodesInterface errorCodes;
+      public @NonNull Builder setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+        this.errorCodes = setterArg;
+        return this;
+      }
+      public @NonNull ProcessRequestInterface build() {
+        ProcessRequestInterface pigeonReturn = new ProcessRequestInterface();
+        pigeonReturn.setFormToken(formToken);
+        pigeonReturn.setErrorCodes(errorCodes);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("formToken", formToken);
+      toMapResult.put("errorCodes", (errorCodes == null) ? null : errorCodes.toMap());
+      return toMapResult;
+    }
+    static @NonNull ProcessRequestInterface fromMap(@NonNull Map<String, Object> map) {
+      ProcessRequestInterface pigeonResult = new ProcessRequestInterface();
+      Object formToken = map.get("formToken");
+      pigeonResult.setFormToken((String)formToken);
+      Object errorCodes = map.get("errorCodes");
+      pigeonResult.setErrorCodes((errorCodes == null) ? null : ErrorCodesInterface.fromMap((Map)errorCodes));
+      return pigeonResult;
+    }
+  }
+
   public interface Result<T> {
     void success(T result);
     void error(Throwable error);
@@ -158,10 +252,16 @@ public class LyraApi {
     protected Object readValueOfType(byte type, @NonNull ByteBuffer buffer) {
       switch (type) {
         case (byte)128:         
-          return LyraInitializeOptionsInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ErrorCodesInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)129:         
+          return LyraInitializeOptionsInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)130:         
           return LyraKeyInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)131:         
+          return ProcessRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         default:        
           return super.readValueOfType(type, buffer);
@@ -170,13 +270,21 @@ public class LyraApi {
     }
     @Override
     protected void writeValue(@NonNull ByteArrayOutputStream stream, Object value)     {
-      if (value instanceof LyraInitializeOptionsInterface) {
+      if (value instanceof ErrorCodesInterface) {
         stream.write(128);
+        writeValue(stream, ((ErrorCodesInterface) value).toMap());
+      } else 
+      if (value instanceof LyraInitializeOptionsInterface) {
+        stream.write(129);
         writeValue(stream, ((LyraInitializeOptionsInterface) value).toMap());
       } else 
       if (value instanceof LyraKeyInterface) {
-        stream.write(129);
+        stream.write(130);
         writeValue(stream, ((LyraKeyInterface) value).toMap());
+      } else 
+      if (value instanceof ProcessRequestInterface) {
+        stream.write(131);
+        writeValue(stream, ((ProcessRequestInterface) value).toMap());
       } else 
 {
         super.writeValue(stream, value);
@@ -188,7 +296,7 @@ public class LyraApi {
   public interface LyraHostApi {
     void initialize(@NonNull LyraKeyInterface lyraKey, Result<LyraKeyInterface> result);
     void getFormTokenVersion(Result<Long> result);
-    void process(@NonNull String formToken, Result<String> result);
+    void process(@NonNull ProcessRequestInterface request, Result<String> result);
 
     /** The codec used by LyraHostApi. */
     static MessageCodec<Object> getCodec() {
@@ -268,9 +376,9 @@ public class LyraApi {
             try {
               ArrayList<Object> args = (ArrayList<Object>)message;
               assert args != null;
-              String formTokenArg = (String)args.get(0);
-              if (formTokenArg == null) {
-                throw new NullPointerException("formTokenArg unexpectedly null.");
+              ProcessRequestInterface requestArg = (ProcessRequestInterface)args.get(0);
+              if (requestArg == null) {
+                throw new NullPointerException("requestArg unexpectedly null.");
               }
               Result<String> resultCallback = new Result<String>() {
                 public void success(String result) {
@@ -283,7 +391,7 @@ public class LyraApi {
                 }
               };
 
-              api.process(formTokenArg, resultCallback);
+              api.process(requestArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));
