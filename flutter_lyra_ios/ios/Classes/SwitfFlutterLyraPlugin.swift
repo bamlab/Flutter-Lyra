@@ -63,7 +63,7 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
         )
     }
     
-    public func processFormToken(_ formToken: String, completion: @escaping (String?, FlutterError?) -> Void) {
+    public func processRequest(_ request: ProcessRequestInterface, completion: @escaping (String?, FlutterError?) -> Void) {
         if (self.lyraKey == nil) {
             completion(
                 nil,
@@ -80,7 +80,7 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
         do {
             try Lyra.process(
                 viewController!,
-                formToken,
+                request.formToken,
                 onSuccess: { ( _ lyraResponse: LyraResponse) -> Void in
                     completion(
                         lyraResponse.getResponseDataString(),
@@ -90,10 +90,14 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                 onError: { (_ error: LyraError, _ lyraResponse: LyraResponse?) -> Void in
                     completion(
                         nil,
-                        FlutterError(
-                            code: error.errorCode,
-                            message: error.errorMessage,
-                            details: nil
+                        Converters.parseError(
+                            lyraError: error,
+                            errorCodesInterface: request.errorCodes,
+                            defaultFlutterError: FlutterError(
+                                code: error.errorCode,
+                                message: error.errorMessage,
+                                details: nil
+                            )
                         )
                     )
                 }

@@ -1,6 +1,21 @@
 import LyraPaymentSDK
 
 public class Converters {
+    static public func parseError(
+                lyraError: LyraError,
+                errorCodesInterface: ErrorCodesInterface,
+                defaultFlutterError: FlutterError
+        ) -> FlutterError {
+            if (lyraError.errorCode == "MOB_009") {
+                return FlutterError(
+                    code: errorCodesInterface.paymentCancelledByUser,
+                    message: lyraError.errorMessage,
+                    details: nil
+                )
+            }
+            return defaultFlutterError
+        }
+    
     static public func initializeOptionsFromInterface(
         optionsInterface: LyraInitializeOptionsInterface
     ) -> [String : Any] {
