@@ -7,6 +7,27 @@ import 'dart:typed_data' show Float64List, Int32List, Int64List, Uint8List;
 import 'package:flutter/foundation.dart' show ReadBuffer, WriteBuffer;
 import 'package:flutter/services.dart';
 
+class ErrorCodesInterface {
+  ErrorCodesInterface({
+    required this.paymentCancelledByUser,
+  });
+
+  String paymentCancelledByUser;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['paymentCancelledByUser'] = paymentCancelledByUser;
+    return pigeonMap;
+  }
+
+  static ErrorCodesInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return ErrorCodesInterface(
+      paymentCancelledByUser: pigeonMap['paymentCancelledByUser']! as String,
+    );
+  }
+}
+
 class LyraInitializeOptionsInterface {
   LyraInitializeOptionsInterface({
     required this.apiServerName,
@@ -61,15 +82,46 @@ class LyraKeyInterface {
   }
 }
 
+class ProcessRequestInterface {
+  ProcessRequestInterface({
+    required this.formToken,
+    required this.errorCodes,
+  });
+
+  String formToken;
+  ErrorCodesInterface errorCodes;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['formToken'] = formToken;
+    pigeonMap['errorCodes'] = errorCodes.encode();
+    return pigeonMap;
+  }
+
+  static ProcessRequestInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return ProcessRequestInterface(
+      formToken: pigeonMap['formToken']! as String,
+      errorCodes: ErrorCodesInterface.decode(pigeonMap['errorCodes']!),
+    );
+  }
+}
+
 class _LyraHostApiCodec extends StandardMessageCodec {
   const _LyraHostApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is LyraInitializeOptionsInterface) {
+    if (value is ErrorCodesInterface) {
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
-    } else if (value is LyraKeyInterface) {
+    } else if (value is LyraInitializeOptionsInterface) {
       buffer.putUint8(129);
+      writeValue(buffer, value.encode());
+    } else if (value is LyraKeyInterface) {
+      buffer.putUint8(130);
+      writeValue(buffer, value.encode());
+    } else if (value is ProcessRequestInterface) {
+      buffer.putUint8(131);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -80,10 +132,16 @@ class _LyraHostApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128:
-        return LyraInitializeOptionsInterface.decode(readValue(buffer)!);
+        return ErrorCodesInterface.decode(readValue(buffer)!);
 
       case 129:
+        return LyraInitializeOptionsInterface.decode(readValue(buffer)!);
+
+      case 130:
         return LyraKeyInterface.decode(readValue(buffer)!);
+
+      case 131:
+        return ProcessRequestInterface.decode(readValue(buffer)!);
 
       default:
         return super.readValueOfType(type, buffer);
@@ -159,12 +217,12 @@ class LyraHostApi {
     }
   }
 
-  Future<String> process(String arg_formToken) async {
+  Future<String> process(ProcessRequestInterface arg_request) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.LyraHostApi.process', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
-        await channel.send(<Object?>[arg_formToken]) as Map<Object?, Object?>?;
+        await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;
     if (replyMap == null) {
       throw PlatformException(
         code: 'channel-error',

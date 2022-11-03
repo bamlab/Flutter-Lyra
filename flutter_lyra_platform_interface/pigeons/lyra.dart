@@ -13,6 +13,14 @@ import 'package:pigeon/pigeon.dart';
     objcSourceOut: '../flutter_lyra_ios/ios/Classes/lyra_api.m',
   ),
 )
+class ErrorCodesInterface {
+  const ErrorCodesInterface({
+    required this.paymentCancelledByUser,
+  });
+
+  final String paymentCancelledByUser;
+}
+
 class LyraInitializeOptionsInterface {
   const LyraInitializeOptionsInterface({
     required this.apiServerName,
@@ -35,6 +43,16 @@ class LyraKeyInterface {
   final LyraInitializeOptionsInterface options;
 }
 
+class ProcessRequestInterface {
+  const ProcessRequestInterface({
+    required this.formToken,
+    required this.errorCodes,
+  });
+
+  final String formToken;
+  final ErrorCodesInterface errorCodes;
+}
+
 @HostApi()
 abstract class LyraHostApi {
   @async
@@ -44,5 +62,5 @@ abstract class LyraHostApi {
   int getFormTokenVersion();
 
   @async
-  String process(String formToken);
+  String process(ProcessRequestInterface request);
 }

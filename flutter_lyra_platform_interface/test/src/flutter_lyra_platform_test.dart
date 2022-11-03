@@ -4,7 +4,11 @@ import 'package:mocktail/mocktail.dart';
 
 class MockLyraHostApi extends Mock implements LyraHostApi {}
 
-class TestFlutterLyra extends FlutterLyraPlatform {}
+class TestFlutterLyra extends FlutterLyraPlatform {
+  @override
+  Never parseError(Object error, StackTrace stackTrace) =>
+      throw UnimplementedError();
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -70,8 +74,15 @@ void main() {
         const formToken = 'formToken';
         const lyraResponse = 'lyraResponse';
 
-        when(() => mockLyraHostApi.process(formToken))
-            .thenAnswer((_) async => lyraResponse);
+        registerFallbackValue(
+          ProcessRequestInterface(
+            formToken: formToken,
+            errorCodes: errorCodesInterface,
+          ),
+        );
+        when(
+          () => mockLyraHostApi.process(any()),
+        ).thenAnswer((_) async => lyraResponse);
 
         final receivedLyraResponse =
             await FlutterLyraPlatform.instance.process(formToken);
