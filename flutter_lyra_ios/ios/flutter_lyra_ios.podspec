@@ -20,6 +20,6 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }  
   s.swift_version = '5.0'
 
-  s.dependency 'LyraPaymentSDK', '~> 2.1.1'
+  s.dependency 'LyraPaymentSDK', '~> 2.2.0'
   s.dependency 'LyraCardsRecognizer', '~> 2.0.1'
 end
