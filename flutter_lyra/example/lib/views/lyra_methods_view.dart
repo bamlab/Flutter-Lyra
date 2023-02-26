@@ -6,12 +6,14 @@ import '../methods/get_form_token_method.dart';
 import '../methods/get_form_token_version_method.dart';
 import '../methods/initialize_method.dart';
 import '../methods/process_method.dart';
+import '../methods/process_then_cancel_method.dart';
 
 enum LyraMethod {
   initialize,
   getFormTokenVersion,
   getFormToken,
   process,
+  processThenCancel,
 }
 
 class LyraMethodsView extends StatefulWidget {
@@ -159,6 +161,15 @@ class _LyraMethodView extends StatelessWidget {
       case LyraMethod.process:
         if (lyra != null && formToken != null) {
           return ProcessMethod(
+            dataSet: dataSet,
+            lyra: lyra,
+            formToken: formToken,
+          );
+        }
+        return const Text('You should get the form token first');
+      case LyraMethod.processThenCancel:
+        if (lyra != null && formToken != null) {
+          return ProcessThenCancelMethod(
             dataSet: dataSet,
             lyra: lyra,
             formToken: formToken,
