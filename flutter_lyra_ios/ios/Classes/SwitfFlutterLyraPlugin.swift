@@ -88,18 +88,25 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                     )
                 },
                 onError: { (_ error: LyraError, _ lyraResponse: LyraResponse?) -> Void in
-                    completion(
-                        nil,
-                        Converters.parseError(
-                            lyraError: error,
-                            errorCodesInterface: request.errorCodes,
-                            defaultFlutterError: FlutterError(
-                                code: error.errorCode,
-                                message: error.errorMessage,
-                                details: nil
+                    // We do not complete with error if errorCode is "MOB_013".
+                    // This error indicate that the payment process cannot be cancelled.
+                    // After this error, normal SDK behavior continues:
+                    // if the payment completes successfully then the onSuccess handler will be called.
+                    // if the payment is failed. Depending on the error, the payment form remains displayed or the onError handler will be called.
+                    if(error.errorCode != "MOB_013") {
+                        completion(
+                            nil,
+                            Converters.parseError(
+                                lyraError: error,
+                                errorCodesInterface: request.errorCodes,
+                                defaultFlutterError: FlutterError(
+                                    code: error.errorCode,
+                                    message: error.errorMessage,
+                                    details: nil
+                                )
                             )
                         )
-                    )
+                    }
                 }
             )
             
