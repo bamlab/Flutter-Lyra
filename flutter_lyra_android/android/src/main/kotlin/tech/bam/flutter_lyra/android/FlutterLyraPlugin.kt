@@ -149,4 +149,19 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
             )
         }
     }
+
+    override fun cancelProcess(result: LyraApi.Result<Void>) {
+        if (lyraKey == null) {
+            result.error(
+                    FlutterError(
+                            code = "lyra_not_initialized_error_code",
+                            message = "You should initialize Lyra first",
+                            details = null
+                    )
+            )
+            return
+        }
+        Lyra.cancelProcess()
+        result.success(null)
+    }
 }

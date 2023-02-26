@@ -273,4 +273,21 @@ void LyraHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<LyraH
       [channel setMessageHandler:nil];
     }
   }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.LyraHostApi.cancelProcess"
+        binaryMessenger:binaryMessenger
+        codec:LyraHostApiGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(cancelProcessWithCompletion:)], @"LyraHostApi api (%@) doesn't respond to @selector(cancelProcessWithCompletion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        [api cancelProcessWithCompletion:^(FlutterError *_Nullable error) {
+          callback(wrapResult(nil, error));
+        }];
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
 }

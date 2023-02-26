@@ -63,4 +63,7 @@ abstract class LyraHostApi {
 
   @async
   String process(ProcessRequestInterface request);
+
+  @async
+  void cancelProcess();
 }

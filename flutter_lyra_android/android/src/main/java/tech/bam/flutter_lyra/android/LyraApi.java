@@ -374,6 +374,8 @@ public class LyraApi {
 
     void process(@NonNull ProcessRequestInterface request, Result<String> result);
 
+    void cancelProcess(Result<Void> result);
+
     /** The codec used by LyraHostApi. */
     static MessageCodec<Object> getCodec() {
       return LyraHostApiCodec.INSTANCE;
@@ -479,6 +481,38 @@ public class LyraApi {
                       };
 
                   api.process(requestArg, resultCallback);
+                } catch (Error | RuntimeException exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  reply.reply(wrappedError);
+                }
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.LyraHostApi.cancelProcess", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList wrapped = new ArrayList<>();
+                try {
+                  Result<Void> resultCallback = 
+                      new Result<Void>() {
+                        public void success(Void result) {
+                          wrapped.add(0, null);
+                          reply.reply(wrapped);
+                        }
+
+                        public void error(Throwable error) {
+                          ArrayList<Object> wrappedError = wrapError(error);
+                          reply.reply(wrappedError);
+                        }
+                      };
+
+                  api.cancelProcess(resultCallback);
                 } catch (Error | RuntimeException exception) {
                   ArrayList<Object> wrappedError = wrapError(exception);
                   reply.reply(wrappedError);

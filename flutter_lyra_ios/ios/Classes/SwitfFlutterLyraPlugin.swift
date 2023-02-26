@@ -3,7 +3,7 @@ import UIKit
 import LyraPaymentSDK
 
 public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
-        
+
     var lyraKey: LyraKeyInterface? = nil
     
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -114,4 +114,20 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
             )
         }
     }
+    
+    public func cancelProcess(completion: @escaping (FlutterError?) -> Void) {
+        if (self.lyraKey == nil) {
+            completion(
+                FlutterError(
+                    code: "lyra_not_initialized_error_code",
+                    message: "You should initialize Lyra first",
+                    details: nil
+                )
+            )
+        }
+        
+        Lyra.cancelProcess()
+        completion(nil)
+    }
+    
 }
