@@ -125,17 +125,24 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
                     }
 
                     override fun onError(lyraException: LyraException, lyraResponse: LyraResponse?) {
-                        result.error(
-                            Converters.parseError(
-                                lyraError = lyraException,
-                                errorCodesInterface = request.errorCodes,
-                                defaultFlutterError = FlutterError(
-                                    code = "process_error_code",
-                                    message = lyraException.message,
-                                    details = null
-                                )
+                        // We do not complete with error if errorCode is "MOB_013".
+                        // This error indicate that the payment process cannot be cancelled.
+                        // After this error, normal SDK behavior continues:
+                        // if the payment completes successfully then the onSuccess handler will be called.
+                        // if the payment is failed. Depending on the error, the payment form remains displayed or the onError handler will be called.
+                        if(lyraException.errorCode != "MOB_013") {
+                            result.error(
+                                    Converters.parseError(
+                                            lyraError = lyraException,
+                                            errorCodesInterface = request.errorCodes,
+                                            defaultFlutterError = FlutterError(
+                                                    code = "process_error_code",
+                                                    message = lyraException.message,
+                                                    details = null
+                                            )
+                                    )
                             )
-                        )
+                        }
                     }
                 }
             )
@@ -148,5 +155,20 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
                 )
             )
         }
+    }
+
+    override fun cancelProcess(result: LyraApi.Result<Void>) {
+        if (lyraKey == null) {
+            result.error(
+                    FlutterError(
+                            code = "lyra_not_initialized_error_code",
+                            message = "You should initialize Lyra first",
+                            details = null
+                    )
+            )
+            return
+        }
+        Lyra.cancelProcess()
+        result.success(null)
     }
 }

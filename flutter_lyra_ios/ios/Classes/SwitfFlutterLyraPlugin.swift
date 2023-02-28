@@ -3,7 +3,7 @@ import UIKit
 import LyraPaymentSDK
 
 public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
-        
+
     var lyraKey: LyraKeyInterface? = nil
     
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -88,18 +88,25 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                     )
                 },
                 onError: { (_ error: LyraError, _ lyraResponse: LyraResponse?) -> Void in
-                    completion(
-                        nil,
-                        Converters.parseError(
-                            lyraError: error,
-                            errorCodesInterface: request.errorCodes,
-                            defaultFlutterError: FlutterError(
-                                code: error.errorCode,
-                                message: error.errorMessage,
-                                details: nil
+                    // We do not complete with error if errorCode is "MOB_013".
+                    // This error indicate that the payment process cannot be cancelled.
+                    // After this error, normal SDK behavior continues:
+                    // if the payment completes successfully then the onSuccess handler will be called.
+                    // if the payment is failed. Depending on the error, the payment form remains displayed or the onError handler will be called.
+                    if(error.errorCode != "MOB_013") {
+                        completion(
+                            nil,
+                            Converters.parseError(
+                                lyraError: error,
+                                errorCodesInterface: request.errorCodes,
+                                defaultFlutterError: FlutterError(
+                                    code: error.errorCode,
+                                    message: error.errorMessage,
+                                    details: nil
+                                )
                             )
                         )
-                    )
+                    }
                 }
             )
             
@@ -114,4 +121,20 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
             )
         }
     }
+    
+    public func cancelProcess(completion: @escaping (FlutterError?) -> Void) {
+        if (self.lyraKey == nil) {
+            completion(
+                FlutterError(
+                    code: "lyra_not_initialized_error_code",
+                    message: "You should initialize Lyra first",
+                    details: nil
+                )
+            )
+        }
+        
+        Lyra.cancelProcess()
+        completion(nil)
+    }
+    
 }
