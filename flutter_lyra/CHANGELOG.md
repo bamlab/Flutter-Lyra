@@ -1,3 +1,7 @@
+## 0.1.3
+
+ - **FIX**: Android error parsing.
+
 # 0.1.2
 
 - Add cancelProcess method
