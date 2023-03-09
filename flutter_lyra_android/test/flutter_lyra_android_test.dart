@@ -73,8 +73,8 @@ void main() {
 
       test('$PaymentCancelledByUserExceptionInterface', () {
         final exception = PlatformException(
-          code: 'code',
-          message: errorCodesInterface.paymentCancelledByUser,
+          code: errorCodesInterface.paymentCancelledByUser,
+          message: 'message',
         );
 
         Object? error;

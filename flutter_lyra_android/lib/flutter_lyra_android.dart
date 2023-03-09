@@ -7,11 +7,9 @@ class FlutterLyraAndroid extends FlutterLyraPlatform {
   @override
   Never parseError(Object error, StackTrace stackTrace) {
     if (error is PlatformException) {
-      final errorMessage = error.message;
-      if (errorMessage != null) {
-        if (errorMessage.contains(errorCodesInterface.paymentCancelledByUser)) {
-          throw PaymentCancelledByUserExceptionInterface();
-        }
+      final errorCode = error.code;
+      if (errorCode.contains(errorCodesInterface.paymentCancelledByUser)) {
+        throw PaymentCancelledByUserExceptionInterface();
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);
