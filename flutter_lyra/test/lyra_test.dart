@@ -92,35 +92,6 @@ void main() {
       });
     });
 
-    group('cancelProcess', () {
-      test('calls the platform cancelProcess api', () async {
-        when(flutterLyraPlatform.cancelProcess).thenAnswer(
-          (_) async {},
-        );
-
-        await lyra.cancelProcess();
-
-        verify(flutterLyraPlatform.cancelProcess).called(1);
-      });
-
-      test('parse throw error', () async {
-        when(flutterLyraPlatform.cancelProcess).thenThrow(Exception());
-
-        registerFallbackValue(
-          StackTrace.fromString('test'),
-        );
-        when(
-          () => flutterLyraPlatform.parseError(any(), any()),
-        ).thenThrow(Exception());
-
-        try {
-          await lyra.cancelProcess();
-        } catch (_) {}
-
-        verify(() => flutterLyraPlatform.parseError(any(), any())).called(1);
-      });
-    });
-
     group('process', () {
       test('returns correct lyra response string', () async {
         const formToken = 'formToken';

@@ -67,7 +67,4 @@ abstract class FlutterLyraPlatform extends PlatformInterface {
           errorCodes: errorCodesInterface,
         ),
       );
-
-  /// {@macro flutter_lyra.lyra.cancelProcess}
-  Future<void> cancelProcess() => lyraHostApi.cancelProcess();
 }

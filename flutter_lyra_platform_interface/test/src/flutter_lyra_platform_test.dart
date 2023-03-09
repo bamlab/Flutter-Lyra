@@ -90,14 +90,5 @@ void main() {
         expect(lyraResponse, receivedLyraResponse);
       });
     });
-    group('cancelProcess', () {
-      test('calls the rght host api', () async {
-        when(mockLyraHostApi.cancelProcess).thenAnswer((_) async {});
-
-        await FlutterLyraPlatform.instance.cancelProcess();
-
-        verify(mockLyraHostApi.cancelProcess).called(1);
-      });
-    });
   });
 }
