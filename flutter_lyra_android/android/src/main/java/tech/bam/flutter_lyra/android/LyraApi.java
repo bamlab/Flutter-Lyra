@@ -273,6 +273,16 @@ public class LyraApi {
       this.errorCodes = setterArg;
     }
 
+    private @Nullable Long timeoutInSeconds;
+
+    public @Nullable Long getTimeoutInSeconds() {
+      return timeoutInSeconds;
+    }
+
+    public void setTimeoutInSeconds(@Nullable Long setterArg) {
+      this.timeoutInSeconds = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private ProcessRequestInterface() {}
 
@@ -292,19 +302,28 @@ public class LyraApi {
         return this;
       }
 
+      private @Nullable Long timeoutInSeconds;
+
+      public @NonNull Builder setTimeoutInSeconds(@Nullable Long setterArg) {
+        this.timeoutInSeconds = setterArg;
+        return this;
+      }
+
       public @NonNull ProcessRequestInterface build() {
         ProcessRequestInterface pigeonReturn = new ProcessRequestInterface();
         pigeonReturn.setFormToken(formToken);
         pigeonReturn.setErrorCodes(errorCodes);
+        pigeonReturn.setTimeoutInSeconds(timeoutInSeconds);
         return pigeonReturn;
       }
     }
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(2);
+      ArrayList<Object> toListResult = new ArrayList<Object>(3);
       toListResult.add(formToken);
       toListResult.add((errorCodes == null) ? null : errorCodes.toList());
+      toListResult.add(timeoutInSeconds);
       return toListResult;
     }
 
@@ -314,6 +333,8 @@ public class LyraApi {
       pigeonResult.setFormToken((String) formToken);
       Object errorCodes = list.get(1);
       pigeonResult.setErrorCodes((errorCodes == null) ? null : ErrorCodesInterface.fromList((ArrayList<Object>) errorCodes));
+      Object timeoutInSeconds = list.get(2);
+      pigeonResult.setTimeoutInSeconds((timeoutInSeconds == null) ? null : ((timeoutInSeconds instanceof Integer) ? (Integer) timeoutInSeconds : (Long) timeoutInSeconds));
       return pigeonResult;
     }
   }
