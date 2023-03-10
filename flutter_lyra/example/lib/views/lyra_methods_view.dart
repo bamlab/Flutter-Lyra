@@ -6,12 +6,14 @@ import '../methods/get_form_token_method.dart';
 import '../methods/get_form_token_version_method.dart';
 import '../methods/initialize_method.dart';
 import '../methods/process_method.dart';
+import '../methods/process_with_timeout_method.dart';
 
 enum LyraMethod {
   initialize,
   getFormTokenVersion,
   getFormToken,
   process,
+  processWithTimeout,
 }
 
 class LyraMethodsView extends StatefulWidget {
@@ -159,6 +161,15 @@ class _LyraMethodView extends StatelessWidget {
       case LyraMethod.process:
         if (lyra != null && formToken != null) {
           return ProcessMethod(
+            dataSet: dataSet,
+            lyra: lyra,
+            formToken: formToken,
+          );
+        }
+        return const Text('You should get the form token first');
+      case LyraMethod.processWithTimeout:
+        if (lyra != null && formToken != null) {
+          return ProcessWithTimeoutMethod(
             dataSet: dataSet,
             lyra: lyra,
             formToken: formToken,
