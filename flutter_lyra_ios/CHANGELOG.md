@@ -1,3 +1,8 @@
+## 0.2.0
+
+ - **BREAKING**: remove implementation of the cancelProcess method.
+ - **FEAT**: implement timeout property in the process method.
+
 # 0.1.2
 
 - Add cancelProcess method
