@@ -130,10 +130,12 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 
 @implementation ProcessRequestInterface
 + (instancetype)makeWithFormToken:(NSString *)formToken
-    errorCodes:(ErrorCodesInterface *)errorCodes {
+    errorCodes:(ErrorCodesInterface *)errorCodes
+    timeoutInSeconds:(nullable NSNumber *)timeoutInSeconds {
   ProcessRequestInterface* pigeonResult = [[ProcessRequestInterface alloc] init];
   pigeonResult.formToken = formToken;
   pigeonResult.errorCodes = errorCodes;
+  pigeonResult.timeoutInSeconds = timeoutInSeconds;
   return pigeonResult;
 }
 + (ProcessRequestInterface *)fromList:(NSArray *)list {
@@ -142,6 +144,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   NSAssert(pigeonResult.formToken != nil, @"");
   pigeonResult.errorCodes = [ErrorCodesInterface nullableFromList:(GetNullableObjectAtIndex(list, 1))];
   NSAssert(pigeonResult.errorCodes != nil, @"");
+  pigeonResult.timeoutInSeconds = GetNullableObjectAtIndex(list, 2);
   return pigeonResult;
 }
 + (nullable ProcessRequestInterface *)nullableFromList:(NSArray *)list {
@@ -151,6 +154,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   return @[
     (self.formToken ?: [NSNull null]),
     (self.errorCodes ? [self.errorCodes toList] : [NSNull null]),
+    (self.timeoutInSeconds ?: [NSNull null]),
   ];
 }
 @end

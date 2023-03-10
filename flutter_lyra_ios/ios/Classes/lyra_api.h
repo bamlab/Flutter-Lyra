@@ -46,9 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithFormToken:(NSString *)formToken
-    errorCodes:(ErrorCodesInterface *)errorCodes;
+    errorCodes:(ErrorCodesInterface *)errorCodes
+    timeoutInSeconds:(nullable NSNumber *)timeoutInSeconds;
 @property(nonatomic, copy) NSString * formToken;
 @property(nonatomic, strong) ErrorCodesInterface * errorCodes;
+@property(nonatomic, strong, nullable) NSNumber * timeoutInSeconds;
 @end
 
 /// The codec used by LyraHostApi.
