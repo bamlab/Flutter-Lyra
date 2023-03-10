@@ -91,16 +91,20 @@ class ProcessRequestInterface {
   ProcessRequestInterface({
     required this.formToken,
     required this.errorCodes,
+    this.timeoutInSeconds,
   });
 
   String formToken;
 
   ErrorCodesInterface errorCodes;
 
+  int? timeoutInSeconds;
+
   Object encode() {
     return <Object?>[
       formToken,
       errorCodes.encode(),
+      timeoutInSeconds,
     ];
   }
 
@@ -109,6 +113,7 @@ class ProcessRequestInterface {
     return ProcessRequestInterface(
       formToken: result[0]! as String,
       errorCodes: ErrorCodesInterface.decode(result[1]! as List<Object?>),
+      timeoutInSeconds: result[2] as int?,
     );
   }
 }
@@ -238,27 +243,6 @@ class LyraHostApi {
       );
     } else {
       return (replyList[0] as String?)!;
-    }
-  }
-
-  Future<void> cancelProcess() async {
-    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.LyraHostApi.cancelProcess', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
-    if (replyList == null) {
-      throw PlatformException(
-        code: 'channel-error',
-        message: 'Unable to establish connection on channel.',
-      );
-    } else if (replyList.length > 1) {
-      throw PlatformException(
-        code: replyList[0]! as String,
-        message: replyList[1] as String?,
-        details: replyList[2],
-      );
-    } else {
-      return;
     }
   }
 }

@@ -10,6 +10,8 @@ import com.lyra.sdk.exception.LyraException
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import kotlinx.coroutines.*
+import java.util.concurrent.TimeUnit
 
 class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
 {
@@ -115,16 +117,30 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
             return
         }
 
+        // If the request has a timeout argument, launch a timer that will call
+        // Lyra.cancelProcess() after the given time.
+        val timeout = request.timeoutInSeconds
+        var cancelProcessJob: Job? = null
+
+        if (timeout != null) {
+            cancelProcessJob =  GlobalScope.launch {
+                delay(TimeUnit.SECONDS.toMillis(timeout))
+                Lyra.cancelProcess()
+            }
+        }
+
         try {
             Lyra.process(
                 fragmentManager = flutterActivity.supportFragmentManager,
                 formToken = request.formToken,
                 lyraHandler = object : LyraHandler {
                     override fun onSuccess(lyraResponse: LyraResponse) {
+                        cancelProcessJob?.cancel()
                         result.success(lyraResponse.toString())
                     }
 
                     override fun onError(lyraException: LyraException, lyraResponse: LyraResponse?) {
+                        cancelProcessJob?.cancel()
                         // We do not complete with error if errorCode is "MOB_013".
                         // This error indicate that the payment process cannot be cancelled.
                         // After this error, normal SDK behavior continues:
@@ -132,21 +148,22 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
                         // if the payment is failed. Depending on the error, the payment form remains displayed or the onError handler will be called.
                         if(lyraException.errorCode != "MOB_013") {
                             result.error(
-                                    Converters.parseError(
-                                            lyraError = lyraException,
-                                            errorCodesInterface = request.errorCodes,
-                                            defaultFlutterError = FlutterError(
-                                                    code = "process_error_code",
-                                                    message = lyraException.message,
-                                                    details = null
-                                            )
+                                Converters.parseError(
+                                    lyraError = lyraException,
+                                    errorCodesInterface = request.errorCodes,
+                                    defaultFlutterError = FlutterError(
+                                        code = "process_error_code",
+                                        message = lyraException.message,
+                                        details = null
                                     )
+                                )
                             )
                         }
                     }
                 }
             )
         } catch (error: Throwable) {
+            cancelProcessJob?.cancel()
             result.error(
                 FlutterError(
                     code = "process_error_code",
@@ -155,20 +172,5 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
                 )
             )
         }
-    }
-
-    override fun cancelProcess(result: LyraApi.Result<Void>) {
-        if (lyraKey == null) {
-            result.error(
-                    FlutterError(
-                            code = "lyra_not_initialized_error_code",
-                            message = "You should initialize Lyra first",
-                            details = null
-                    )
-            )
-            return
-        }
-        Lyra.cancelProcess()
-        result.success(null)
     }
 }

@@ -273,6 +273,16 @@ public class LyraApi {
       this.errorCodes = setterArg;
     }
 
+    private @Nullable Long timeoutInSeconds;
+
+    public @Nullable Long getTimeoutInSeconds() {
+      return timeoutInSeconds;
+    }
+
+    public void setTimeoutInSeconds(@Nullable Long setterArg) {
+      this.timeoutInSeconds = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private ProcessRequestInterface() {}
 
@@ -292,19 +302,28 @@ public class LyraApi {
         return this;
       }
 
+      private @Nullable Long timeoutInSeconds;
+
+      public @NonNull Builder setTimeoutInSeconds(@Nullable Long setterArg) {
+        this.timeoutInSeconds = setterArg;
+        return this;
+      }
+
       public @NonNull ProcessRequestInterface build() {
         ProcessRequestInterface pigeonReturn = new ProcessRequestInterface();
         pigeonReturn.setFormToken(formToken);
         pigeonReturn.setErrorCodes(errorCodes);
+        pigeonReturn.setTimeoutInSeconds(timeoutInSeconds);
         return pigeonReturn;
       }
     }
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(2);
+      ArrayList<Object> toListResult = new ArrayList<Object>(3);
       toListResult.add(formToken);
       toListResult.add((errorCodes == null) ? null : errorCodes.toList());
+      toListResult.add(timeoutInSeconds);
       return toListResult;
     }
 
@@ -314,6 +333,8 @@ public class LyraApi {
       pigeonResult.setFormToken((String) formToken);
       Object errorCodes = list.get(1);
       pigeonResult.setErrorCodes((errorCodes == null) ? null : ErrorCodesInterface.fromList((ArrayList<Object>) errorCodes));
+      Object timeoutInSeconds = list.get(2);
+      pigeonResult.setTimeoutInSeconds((timeoutInSeconds == null) ? null : ((timeoutInSeconds instanceof Integer) ? (Integer) timeoutInSeconds : (Long) timeoutInSeconds));
       return pigeonResult;
     }
   }
@@ -373,8 +394,6 @@ public class LyraApi {
     void getFormTokenVersion(Result<Long> result);
 
     void process(@NonNull ProcessRequestInterface request, Result<String> result);
-
-    void cancelProcess(Result<Void> result);
 
     /** The codec used by LyraHostApi. */
     static MessageCodec<Object> getCodec() {
@@ -481,38 +500,6 @@ public class LyraApi {
                       };
 
                   api.process(requestArg, resultCallback);
-                } catch (Error | RuntimeException exception) {
-                  ArrayList<Object> wrappedError = wrapError(exception);
-                  reply.reply(wrappedError);
-                }
-              });
-        } else {
-          channel.setMessageHandler(null);
-        }
-      }
-      {
-        BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.LyraHostApi.cancelProcess", getCodec());
-        if (api != null) {
-          channel.setMessageHandler(
-              (message, reply) -> {
-                ArrayList wrapped = new ArrayList<>();
-                try {
-                  Result<Void> resultCallback = 
-                      new Result<Void>() {
-                        public void success(Void result) {
-                          wrapped.add(0, null);
-                          reply.reply(wrapped);
-                        }
-
-                        public void error(Throwable error) {
-                          ArrayList<Object> wrappedError = wrapError(error);
-                          reply.reply(wrappedError);
-                        }
-                      };
-
-                  api.cancelProcess(resultCallback);
                 } catch (Error | RuntimeException exception) {
                   ArrayList<Object> wrappedError = wrapError(exception);
                   reply.reply(wrappedError);

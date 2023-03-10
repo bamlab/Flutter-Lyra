@@ -61,13 +61,15 @@ abstract class FlutterLyraPlatform extends PlatformInterface {
   Future<int> getFormTokenVersion() => lyraHostApi.getFormTokenVersion();
 
   /// {@macro flutter_lyra.lyra.process}
-  Future<String> process(String formToken) => lyraHostApi.process(
+  Future<String> process(
+    String formToken, {
+    Duration? timeout,
+  }) =>
+      lyraHostApi.process(
         ProcessRequestInterface(
           formToken: formToken,
           errorCodes: errorCodesInterface,
+          timeoutInSeconds: timeout?.inSeconds,
         ),
       );
-
-  /// {@macro flutter_lyra.lyra.cancelProcess}
-  Future<void> cancelProcess() => lyraHostApi.cancelProcess();
 }

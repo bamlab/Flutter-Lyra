@@ -6,8 +6,8 @@ import 'package:flutter_lyra/flutter_lyra.dart';
 import '../const.dart';
 import '../widgets/snackbar.dart';
 
-class ProcessThenCancelMethod extends StatefulWidget {
-  const ProcessThenCancelMethod({
+class ProcessWithTimeoutMethod extends StatefulWidget {
+  const ProcessWithTimeoutMethod({
     required this.dataSet,
     required this.lyra,
     required this.formToken,
@@ -19,16 +19,14 @@ class ProcessThenCancelMethod extends StatefulWidget {
   final String formToken;
 
   @override
-  State<ProcessThenCancelMethod> createState() =>
-      _ProcessThenCancelMethodMethodState();
+  State<ProcessWithTimeoutMethod> createState() =>
+      _ProcessWithTimeoutMethodState();
 }
 
-class _ProcessThenCancelMethodMethodState
-    extends State<ProcessThenCancelMethod> {
+class _ProcessWithTimeoutMethodState extends State<ProcessWithTimeoutMethod> {
   bool areInteractionsDisabled = false;
 
   String? lyraResponse;
-  Timer? timer;
 
   void setLyraResponse(String newLyraResponse) {
     setState(() {
@@ -37,13 +35,15 @@ class _ProcessThenCancelMethodMethodState
   }
 
   Future<void> process() async {
-    timer = Timer(const Duration(seconds: 15), widget.lyra.cancelProcess);
     setState(() {
       areInteractionsDisabled = true;
     });
 
     try {
-      final result = await widget.lyra.process(widget.formToken);
+      final result = await widget.lyra.process(
+        widget.formToken,
+        timeout: const Duration(seconds: 10),
+      );
 
       setLyraResponse(result);
 
@@ -63,18 +63,10 @@ class _ProcessThenCancelMethodMethodState
         );
       }
     } finally {
-      timer?.cancel();
       setState(() {
         areInteractionsDisabled = false;
       });
     }
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    timer = null;
-    super.dispose();
   }
 
   @override
@@ -85,7 +77,7 @@ class _ProcessThenCancelMethodMethodState
       children: [
         ElevatedButton(
           onPressed: !areInteractionsDisabled ? process : null,
-          child: const Text('Process your payment then cancel'),
+          child: const Text('Process your payment'),
         ),
         if (lyraResponse != null) ...[
           const SizedBox(height: 32),

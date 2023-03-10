@@ -73,8 +73,9 @@ void main() {
 
       test('$PaymentCancelledByUserExceptionInterface', () {
         final exception = PlatformException(
-          code: 'code',
-          message: errorCodesInterface.paymentCancelledByUser,
+          code:
+              '''tech.bam.flutter_lyra.android.FlutterError: payment_cancelled_by_user_code - Payment cancelled''',
+          message: 'FlutterError',
         );
 
         Object? error;

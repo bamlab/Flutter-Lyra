@@ -46,9 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithFormToken:(NSString *)formToken
-    errorCodes:(ErrorCodesInterface *)errorCodes;
+    errorCodes:(ErrorCodesInterface *)errorCodes
+    timeoutInSeconds:(nullable NSNumber *)timeoutInSeconds;
 @property(nonatomic, copy) NSString * formToken;
 @property(nonatomic, strong) ErrorCodesInterface * errorCodes;
+@property(nonatomic, strong, nullable) NSNumber * timeoutInSeconds;
 @end
 
 /// The codec used by LyraHostApi.
@@ -58,7 +60,6 @@ NSObject<FlutterMessageCodec> *LyraHostApiGetCodec(void);
 - (void)initializeLyraKey:(LyraKeyInterface *)lyraKey completion:(void (^)(LyraKeyInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)getFormTokenVersionWithCompletion:(void (^)(NSNumber *_Nullable, FlutterError *_Nullable))completion;
 - (void)processRequest:(ProcessRequestInterface *)request completion:(void (^)(NSString *_Nullable, FlutterError *_Nullable))completion;
-- (void)cancelProcessWithCompletion:(void (^)(FlutterError *_Nullable))completion;
 @end
 
 extern void LyraHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<LyraHostApi> *_Nullable api);

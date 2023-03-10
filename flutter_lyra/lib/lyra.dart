@@ -43,43 +43,23 @@ class Lyra {
 
   /// @template flutter_lyra.lyra.process}
   /// Process the paiement
+  ///
+  /// [timeout] is the duration after which the process will timeout and the
+  /// process will be cancelled.
+  ///
+  /// If not specified, the process will not timeout.
   /// {@endtemplate}
-  Future<String> process(String formToken) async {
+  Future<String> process(
+    String formToken, {
+    Duration? timeout,
+  }) async {
     try {
-      final lyraResponse = await _platform.process(formToken);
+      final lyraResponse = await _platform.process(
+        formToken,
+        timeout: timeout,
+      );
 
       return lyraResponse;
-    } catch (error, stackTrace) {
-      try {
-        _platform.parseError(error, stackTrace);
-      } catch (interfaceError, interfaceStackTrace) {
-        adaptErrors(
-          error: interfaceError,
-          stackTrace: interfaceStackTrace,
-        );
-      }
-    }
-  }
-
-  /// @template flutter_lyra.lyra.cancelProcess}
-  /// It is possible to cancel a payment in progress using the
-  /// `cancelProcess()` method. In general, this method allows you to exit
-  /// the payment form correctly, but there are different scenarios:
-  /// 1. The payment process can be canceled:
-  ///   - the payment form closes correctly.
-  ///   - [process] will throw a payment cancel error, indicating that the
-  /// payment process has been cancelled.
-  /// 2. The payment process cannot be undone.
-  ///   - If `cancelProcess()` is
-  /// invoked while the SDK is in communication with the payment platform (the
-  /// user has just clicked on the pay button): the payment form remains
-  /// displayed.
-  /// 3. If there is no current payment process, calling `cancelProcess()` will
-  /// have no effect.
-  /// {@endtemplate}
-  Future<void> cancelProcess() async {
-    try {
-      await _platform.cancelProcess();
     } catch (error, stackTrace) {
       try {
         _platform.parseError(error, stackTrace);
