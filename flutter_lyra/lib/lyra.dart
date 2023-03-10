@@ -43,10 +43,21 @@ class Lyra {
 
   /// @template flutter_lyra.lyra.process}
   /// Process the paiement
+  ///
+  /// [timeout] is the duration after which the process will timeout and the
+  /// process will be cancelled.
+  ///
+  /// If not specified, the process will not timeout.
   /// {@endtemplate}
-  Future<String> process(String formToken) async {
+  Future<String> process(
+    String formToken, {
+    Duration? timeout,
+  }) async {
     try {
-      final lyraResponse = await _platform.process(formToken);
+      final lyraResponse = await _platform.process(
+        formToken,
+        timeout: timeout,
+      );
 
       return lyraResponse;
     } catch (error, stackTrace) {
