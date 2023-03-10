@@ -47,10 +47,12 @@ class ProcessRequestInterface {
   const ProcessRequestInterface({
     required this.formToken,
     required this.errorCodes,
+    this.timeoutInSeconds,
   });
 
   final String formToken;
   final ErrorCodesInterface errorCodes;
+  final int? timeoutInSeconds;
 }
 
 @HostApi()

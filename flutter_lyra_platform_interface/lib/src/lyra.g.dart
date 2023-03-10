@@ -91,16 +91,20 @@ class ProcessRequestInterface {
   ProcessRequestInterface({
     required this.formToken,
     required this.errorCodes,
+    this.timeoutInSeconds,
   });
 
   String formToken;
 
   ErrorCodesInterface errorCodes;
 
+  int? timeoutInSeconds;
+
   Object encode() {
     return <Object?>[
       formToken,
       errorCodes.encode(),
+      timeoutInSeconds,
     ];
   }
 
@@ -109,6 +113,7 @@ class ProcessRequestInterface {
     return ProcessRequestInterface(
       formToken: result[0]! as String,
       errorCodes: ErrorCodesInterface.decode(result[1]! as List<Object?>),
+      timeoutInSeconds: result[2] as int?,
     );
   }
 }
