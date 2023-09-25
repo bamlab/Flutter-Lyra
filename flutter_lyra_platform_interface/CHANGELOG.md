@@ -1,3 +1,10 @@
+## 0.2.1
+
+ - [Android] Upgrade kotlin version
+ - [Android] Upgrade gradle
+ - [Android] Upgrade material
+ - [Android] Upgrade compileSdkVersion
+
 ## 0.2.0
 
  - **BREAKING**: the cancel process method has been removed in favor of the timeout property.
