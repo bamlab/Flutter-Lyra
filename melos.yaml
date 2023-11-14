@@ -8,7 +8,6 @@ packages:
 
 command:
   bootstrap:
-    usePubspecOverrides: true
     # It seems so that running "pub get" in parallel has some issues (like
     # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
     # makes the CI much more stable.
@@ -24,12 +23,13 @@ scripts:
     description: |
       Run `dart analyze` in all packages.
        - Note: you can also rely on your IDEs Dart Analysis / Issues window.
-         
+
   generate:pigeon:
-    run: melos exec -- "flutter pub run pigeon --input ./pigeons/lyra.dart && flutter format lib test"
-    select-package:
-      file-exists: "pigeons/lyra.dart"
-         
+    run: melos exec -- "flutter pub run pigeon --input ./pigeons/lyra.dart && dart format lib test"
+    packageFilters:
+      dependsOn:
+        - pigeon
+
   test:all:
     run: |
       melos run test --no-select
@@ -45,8 +45,8 @@ scripts:
       dir-exists:
         - test
       ignore:
-        - '*web*'
-        - '*example*'
+        - "*web*"
+        - "*example*"
 
   test_coverage:all:
     run: |
@@ -65,9 +65,9 @@ scripts:
       dir-exists:
         - test
       ignore:
-        - '*web*'
-        - '*example*'
-  
+        - "*web*"
+        - "*example*"
+
   open_coverage:all:
     run: |
       melos run open_coverage --no-select
@@ -82,9 +82,9 @@ scripts:
       dir-exists:
         - test
       ignore:
-        - '*web*'
-        - '*example*'
-         
+        - "*web*"
+        - "*example*"
+
   # Additional cleanup lifecycle script, executed when `melos clean` is run.
   postclean: >
     melos exec -c 6 -- "flutter clean"
