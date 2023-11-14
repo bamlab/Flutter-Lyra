@@ -7,6 +7,7 @@ class LyraInitializeOptions extends Equatable {
     required this.apiServerName,
     this.nfcEnabled,
     this.cardScanningEnabled,
+    this.applePayMerchantId,
   });
 
   /// a [String] that match your api server name
@@ -27,10 +28,16 @@ class LyraInitializeOptions extends Equatable {
   /// must be added on gradle file
   final bool? cardScanningEnabled;
 
+  /// a [String] that match your Apple Pay merchant id.
+  ///
+  /// only used for iOS platform, otherwise this value is ignored
+  final String? applePayMerchantId;
+
   @override
   List<Object?> get props => [
         apiServerName,
         nfcEnabled,
         cardScanningEnabled,
+        applePayMerchantId,
       ];
 }
