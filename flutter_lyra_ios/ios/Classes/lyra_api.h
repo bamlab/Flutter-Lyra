@@ -27,10 +27,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithApiServerName:(NSString *)apiServerName
     nfcEnabled:(nullable NSNumber *)nfcEnabled
-    cardScanningEnabled:(nullable NSNumber *)cardScanningEnabled;
+    cardScanningEnabled:(nullable NSNumber *)cardScanningEnabled
+    applePayMerchantId:(nullable NSString *)applePayMerchantId;
 @property(nonatomic, copy) NSString * apiServerName;
 @property(nonatomic, strong, nullable) NSNumber * nfcEnabled;
 @property(nonatomic, strong, nullable) NSNumber * cardScanningEnabled;
+@property(nonatomic, copy, nullable) NSString * applePayMerchantId;
 @end
 
 @interface LyraKeyInterface : NSObject

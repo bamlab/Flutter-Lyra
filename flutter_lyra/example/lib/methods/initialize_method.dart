@@ -26,6 +26,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
 
   late String publicKey = widget.dataSet.initialPublicKey;
   late String apiServerName = widget.dataSet.initialApiServerName;
+  late String applePayMerchantId = widget.dataSet.initialApplePayMerchantId;
   var nfcEnabled = false;
   var cardScanningEnabled = false;
 
@@ -35,6 +36,10 @@ class _InitializeMethodState extends State<InitializeMethod> {
 
   void setApiServerName(String newApiServerName) => setState(() {
         apiServerName = newApiServerName;
+      });
+
+  void setApplePayMerchantId(String newApplePayMerchantId) => setState(() {
+        applePayMerchantId = newApplePayMerchantId;
       });
 
   void setNfcEnabled({required bool newNfcEnabled}) => setState(() {
@@ -58,6 +63,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
           apiServerName: apiServerName,
           nfcEnabled: nfcEnabled,
           cardScanningEnabled: cardScanningEnabled,
+          applePayMerchantId: applePayMerchantId,
         ),
       );
 
@@ -103,6 +109,12 @@ class _InitializeMethodState extends State<InitializeMethod> {
             value: apiServerName,
             hintText: 'apiServerName',
             setValue: setApiServerName,
+          ),
+          const SizedBox(height: 16),
+          CustomTextField(
+            value: applePayMerchantId,
+            hintText: 'applePayMerchantId',
+            setValue: setApplePayMerchantId,
           ),
           const SizedBox(height: 16),
           SwitchListTile(

@@ -26,11 +26,13 @@ class LyraInitializeOptionsInterface {
     required this.apiServerName,
     required this.nfcEnabled,
     required this.cardScanningEnabled,
+    required this.applePayMerchantId,
   });
 
   final String apiServerName;
   final bool? nfcEnabled;
   final bool? cardScanningEnabled;
+  final String? applePayMerchantId;
 }
 
 class LyraKeyInterface {

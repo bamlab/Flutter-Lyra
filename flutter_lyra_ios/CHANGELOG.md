@@ -1,7 +1,12 @@
-## 0.2.0
+# 0.3.0
 
- - **BREAKING**: remove implementation of the cancelProcess method.
- - **FEAT**: implement timeout property in the process method.
+- Update a dependency to the latest release.
+- **FEAT**: implements Apple Pay.
+
+# 0.2.0
+
+- **BREAKING**: remove implementation of the cancelProcess method.
+- **FEAT**: implement timeout property in the process method.
 
 # 0.1.2
 
