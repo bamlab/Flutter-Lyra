@@ -46,7 +46,7 @@ class _GetFormTokenMethodState extends State<GetFormTokenMethod> {
           method: 'POST',
           headers: <String, dynamic>{
             HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: basicAuthentication
+            HttpHeaders.authorizationHeader: basicAuthentication,
           },
           data: widget.dataSet
               .initialCreatePaymentPayload(widget.formTokenVersion),
@@ -109,7 +109,7 @@ class _GetFormTokenMethodState extends State<GetFormTokenMethod> {
         if (formToken != null) ...[
           const SizedBox(height: 32),
           Text('formToken :$formToken'),
-        ]
+        ],
       ],
     );
   }

@@ -73,10 +73,10 @@ class _FirstDataSet extends DataSet {
         'orderId': 'orderId',
         'customer': {
           'email': 'customer@email.com',
-          'reference': 'customerReference'
+          'reference': 'customerReference',
         },
         'formTokenVersion': formTokenVersion,
-        'mode': 'TEST' // value 'TEST' or 'PRODUCTION'
+        'mode': 'TEST', // value 'TEST' or 'PRODUCTION'
       };
 }
 
