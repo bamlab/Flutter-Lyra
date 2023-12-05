@@ -32,6 +32,11 @@ public class Converters {
         if (applePayMerchantId != nil) {
             options[Lyra.applePayMerchantId] = applePayMerchantId
         }
+
+        let applePayMerchantName = optionsInterface.applePayMerchantName
+        if (applePayMerchantName != nil) {
+            options[Lyra.applePayMerchantName] = applePayMerchantName
+        }
         
         return options
     }

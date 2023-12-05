@@ -32,6 +32,7 @@ void main() {
         cardScanningEnabled: true,
         nfcEnabled: false,
         applePayMerchantId: 'applePayMerchantId',
+        applePayMerchantName: 'applePayMerchantName',
       );
 
       lyra = Lyra(publicKey: publicKey, options: options);
@@ -70,6 +71,8 @@ void main() {
 
         expect(lyraReceived.options.applePayMerchantId, isNotNull);
 
+        expect(lyraReceived.options.applePayMerchantName, isNotNull);
+
         expect(
           LyraInitializeOptionsConverter.fromInterface(
             lyraKeyInterface.options,
@@ -107,6 +110,8 @@ void main() {
           lyraKeyInterface.publicKey,
           lyraReceived.publicKey,
         );
+
+        expect(lyraReceived.options.applePayMerchantId, isNull);
 
         expect(lyraReceived.options.applePayMerchantId, isNull);
 

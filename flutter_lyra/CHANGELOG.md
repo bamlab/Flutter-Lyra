@@ -1,3 +1,7 @@
+# 0.3.1
+
+- **FEAT**: Add apple pay merchant id.
+
 # 0.3.0
 
 - **FEAT**: add Apple Pay support.

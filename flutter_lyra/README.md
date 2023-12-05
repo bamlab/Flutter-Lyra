@@ -1,12 +1,8 @@
 # Flutter-Lyra
 
----
+## Installation
 
-# Installation
-
----
-
-## Android
+### Android
 
 Prerequisites:
 
@@ -74,9 +70,7 @@ defaultConfig {
 
     Don't forget to change it as well in your `android/app/src/main/res/values-night/styles.xml` if you need to
 
----
-
-## iOS
+### iOS
 
 Prerequisites:
 
@@ -86,15 +80,11 @@ Prerequisites:
 platform :ios, '11.0'
 ```
 
----
-
 ## About Lyra
 
 This sdk is the flutter interface implementation of the [android](https://github.com/lyra/android-sdk) and [ios](https://github.com/lyra/ios-sdk) sdks of Lyra
 
 If you want more informations about Lyra, here is their [website](https://payzen.io/fr-FR/)
-
----
 
 ## 👉 About Bam
 
