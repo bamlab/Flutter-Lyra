@@ -35,6 +35,7 @@ class LyraInitializeOptionsInterface {
     this.nfcEnabled,
     this.cardScanningEnabled,
     this.applePayMerchantId,
+    this.applePayMerchantName,
   });
 
   String apiServerName;
@@ -45,12 +46,15 @@ class LyraInitializeOptionsInterface {
 
   String? applePayMerchantId;
 
+  String? applePayMerchantName;
+
   Object encode() {
     return <Object?>[
       apiServerName,
       nfcEnabled,
       cardScanningEnabled,
       applePayMerchantId,
+      applePayMerchantName,
     ];
   }
 
@@ -61,6 +65,7 @@ class LyraInitializeOptionsInterface {
       nfcEnabled: result[1] as bool?,
       cardScanningEnabled: result[2] as bool?,
       applePayMerchantId: result[3] as String?,
+      applePayMerchantName: result[4] as String?,
     );
   }
 }

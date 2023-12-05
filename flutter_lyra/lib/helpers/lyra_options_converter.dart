@@ -17,6 +17,9 @@ class LyraInitializeOptionsConverter {
         applePayMerchantId: defaultTargetPlatform == TargetPlatform.iOS
             ? lyraInitializeOptions.applePayMerchantId
             : null,
+        applePayMerchantName: defaultTargetPlatform == TargetPlatform.iOS
+            ? lyraInitializeOptions.applePayMerchantName
+            : null,
       );
 
   /// convert a [LyraInitializeOptionsInterface] to a [LyraInitializeOptions]
@@ -28,5 +31,7 @@ class LyraInitializeOptionsConverter {
         cardScanningEnabled: lyraInitializeOptionInterface.cardScanningEnabled,
         nfcEnabled: lyraInitializeOptionInterface.nfcEnabled,
         applePayMerchantId: lyraInitializeOptionInterface.applePayMerchantId,
+        applePayMerchantName:
+            lyraInitializeOptionInterface.applePayMerchantName,
       );
 }

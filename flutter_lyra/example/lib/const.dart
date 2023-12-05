@@ -22,8 +22,11 @@ abstract class DataSet {
   /// Create payment request payload route path
   String get initialCreatePaymentRoutePath;
 
-  ///
+  /// Your Apple pay merchant id
   String get initialApplePayMerchantId;
+
+  /// Your Apple pay merchant name
+  String get initialApplePayMerchantName;
 
   /// Create payment request payload currency
   Map<String, Object?> initialCreatePaymentPayload(int formTokenVersion);
@@ -63,6 +66,10 @@ class _FirstDataSet extends DataSet {
   /// Apple pay merchant id
   @override
   String get initialApplePayMerchantId => '';
+
+  /// Apple pay merchant name
+  @override
+  String get initialApplePayMerchantName => '';
 
   /// Create payment request payload currency
   @override
