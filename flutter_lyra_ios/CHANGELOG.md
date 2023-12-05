@@ -1,3 +1,7 @@
+# 0.3.1
+
+- **FEAT**: Add apple pay merchant id.
+
 # 0.3.0
 
 - Update a dependency to the latest release.

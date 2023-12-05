@@ -1,6 +1,6 @@
 name: flutter_lyra_android
 description: Android implementation of the flutter_lyra plugin
-version: 0.3.0
+version: 0.3.1
 homepage: https://github.com/bamlab/Flutter-Lyra
 repository: https://github.com/bamlab/Flutter-Lyra
 
@@ -20,7 +20,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_lyra_platform_interface: ^0.3.0
+  flutter_lyra_platform_interface: ^0.3.1
 dev_dependencies:
   analyzer: ^5.13.0
   flutter_test:
