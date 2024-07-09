@@ -1,10 +1,9 @@
-# 0.3.2
+# 0.4.0
 
- - [Android] Upgrade kotlin version
- - [Android] Upgrade gradle
- - [Android] Upgrade material
- - [Android] Upgrade compileSdkVersion
-
+- [Android] Upgrade kotlin version
+- [Android] Upgrade gradle
+- [Android] Upgrade material
+- [Android] Upgrade compileSdkVersion
 
 # 0.3.1
 
