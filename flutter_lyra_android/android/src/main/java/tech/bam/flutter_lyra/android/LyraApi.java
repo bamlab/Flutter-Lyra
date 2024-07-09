@@ -116,6 +116,26 @@ public class LyraApi {
       this.cardScanningEnabled = setterArg;
     }
 
+    private @Nullable String applePayMerchantId;
+
+    public @Nullable String getApplePayMerchantId() {
+      return applePayMerchantId;
+    }
+
+    public void setApplePayMerchantId(@Nullable String setterArg) {
+      this.applePayMerchantId = setterArg;
+    }
+
+    private @Nullable String applePayMerchantName;
+
+    public @Nullable String getApplePayMerchantName() {
+      return applePayMerchantName;
+    }
+
+    public void setApplePayMerchantName(@Nullable String setterArg) {
+      this.applePayMerchantName = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private LyraInitializeOptionsInterface() {}
 
@@ -142,21 +162,39 @@ public class LyraApi {
         return this;
       }
 
+      private @Nullable String applePayMerchantId;
+
+      public @NonNull Builder setApplePayMerchantId(@Nullable String setterArg) {
+        this.applePayMerchantId = setterArg;
+        return this;
+      }
+
+      private @Nullable String applePayMerchantName;
+
+      public @NonNull Builder setApplePayMerchantName(@Nullable String setterArg) {
+        this.applePayMerchantName = setterArg;
+        return this;
+      }
+
       public @NonNull LyraInitializeOptionsInterface build() {
         LyraInitializeOptionsInterface pigeonReturn = new LyraInitializeOptionsInterface();
         pigeonReturn.setApiServerName(apiServerName);
         pigeonReturn.setNfcEnabled(nfcEnabled);
         pigeonReturn.setCardScanningEnabled(cardScanningEnabled);
+        pigeonReturn.setApplePayMerchantId(applePayMerchantId);
+        pigeonReturn.setApplePayMerchantName(applePayMerchantName);
         return pigeonReturn;
       }
     }
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(3);
+      ArrayList<Object> toListResult = new ArrayList<Object>(5);
       toListResult.add(apiServerName);
       toListResult.add(nfcEnabled);
       toListResult.add(cardScanningEnabled);
+      toListResult.add(applePayMerchantId);
+      toListResult.add(applePayMerchantName);
       return toListResult;
     }
 
@@ -168,6 +206,10 @@ public class LyraApi {
       pigeonResult.setNfcEnabled((Boolean) nfcEnabled);
       Object cardScanningEnabled = list.get(2);
       pigeonResult.setCardScanningEnabled((Boolean) cardScanningEnabled);
+      Object applePayMerchantId = list.get(3);
+      pigeonResult.setApplePayMerchantId((String) applePayMerchantId);
+      Object applePayMerchantName = list.get(4);
+      pigeonResult.setApplePayMerchantName((String) applePayMerchantName);
       return pigeonResult;
     }
   }

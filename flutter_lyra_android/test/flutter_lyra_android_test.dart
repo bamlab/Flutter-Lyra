@@ -22,7 +22,7 @@ void main() {
       flutterLyra = FlutterLyraAndroid();
 
       log = <MethodCall>[];
-      TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(flutterLyra.methodChannel,
               (methodCall) async {
         log.add(methodCall);

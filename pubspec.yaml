@@ -1,0 +1,7 @@
+name: flutter_lyra_workspace
+
+environment:
+  sdk: ">=2.19.0 <3.0.0"
+
+dependencies:
+  melos: ^3.1.1

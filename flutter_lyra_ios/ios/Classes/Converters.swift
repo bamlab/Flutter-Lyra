@@ -28,6 +28,16 @@ public class Converters {
             options[Lyra.cardScanningEnabled] = cardScanningEnabled
         }
         
+        let applePayMerchantId = optionsInterface.applePayMerchantId
+        if (applePayMerchantId != nil) {
+            options[Lyra.applePayMerchantId] = applePayMerchantId
+        }
+
+        let applePayMerchantName = optionsInterface.applePayMerchantName
+        if (applePayMerchantName != nil) {
+            options[Lyra.applePayMerchantName] = applePayMerchantName
+        }
+        
         return options
     }
 }

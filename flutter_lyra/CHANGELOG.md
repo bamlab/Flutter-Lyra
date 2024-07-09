@@ -1,15 +1,24 @@
-## 0.2.1
+# 0.3.2
 
- - [Android] Upgrade kotlin version
- - [Android] Upgrade gradle
- - [Android] Upgrade material
- - [Android] Upgrade compileSdkVersion
+- [Android] Upgrade kotlin version
+- [Android] Upgrade gradle
+- [Android] Upgrade material
+- [Android] Upgrade compileSdkVersion
  
-## 0.2.0
+# 0.3.1
 
- - **BREAKING**: the cancel process method has been removed in favor of the timeout property.
- - **FEAT**: expose timeout property in the process method.
- - **FIX**: Android error parsing when the process is cancelled.
+
+- **FEAT**: Add apple pay merchant id.
+
+# 0.3.0
+
+- **FEAT**: add Apple Pay support.
+
+# 0.2.0
+
+- **BREAKING**: the cancel process method has been removed in favor of the timeout property.
+- **FEAT**: expose timeout property in the process method.
+- **FIX**: Android error parsing when the process is cancelled.
 
 # 0.1.2
 

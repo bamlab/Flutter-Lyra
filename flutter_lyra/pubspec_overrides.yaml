@@ -1,8 +1,8 @@
-# melos_managed_dependency_overrides: flutter_lyra_android,flutter_lyra_platform_interface,flutter_lyra_ios
+# melos_managed_dependency_overrides: flutter_lyra_android,flutter_lyra_ios,flutter_lyra_platform_interface
 dependency_overrides:
-  flutter_lyra_platform_interface:
-    path: ../flutter_lyra_platform_interface
-  flutter_lyra_android: 
+  flutter_lyra_android:
     path: ../flutter_lyra_android
   flutter_lyra_ios:
     path: ../flutter_lyra_ios
+  flutter_lyra_platform_interface:
+    path: ../flutter_lyra_platform_interface

@@ -22,6 +22,12 @@ abstract class DataSet {
   /// Create payment request payload route path
   String get initialCreatePaymentRoutePath;
 
+  /// Your Apple pay merchant id
+  String get initialApplePayMerchantId;
+
+  /// Your Apple pay merchant name
+  String get initialApplePayMerchantName;
+
   /// Create payment request payload currency
   Map<String, Object?> initialCreatePaymentPayload(int formTokenVersion);
 }
@@ -57,6 +63,14 @@ class _FirstDataSet extends DataSet {
   @override
   String get initialCreatePaymentRoutePath => '/Charge/CreatePayment';
 
+  /// Apple pay merchant id
+  @override
+  String get initialApplePayMerchantId => '';
+
+  /// Apple pay merchant name
+  @override
+  String get initialApplePayMerchantName => '';
+
   /// Create payment request payload currency
   @override
   Map<String, Object?> initialCreatePaymentPayload(int formTokenVersion) =>
@@ -66,10 +80,10 @@ class _FirstDataSet extends DataSet {
         'orderId': 'orderId',
         'customer': {
           'email': 'customer@email.com',
-          'reference': 'customerReference'
+          'reference': 'customerReference',
         },
         'formTokenVersion': formTokenVersion,
-        'mode': 'TEST' // value 'TEST' or 'PRODUCTION'
+        'mode': 'TEST', // value 'TEST' or 'PRODUCTION'
       };
 }
 

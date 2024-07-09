@@ -74,11 +74,15 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 @implementation LyraInitializeOptionsInterface
 + (instancetype)makeWithApiServerName:(NSString *)apiServerName
     nfcEnabled:(nullable NSNumber *)nfcEnabled
-    cardScanningEnabled:(nullable NSNumber *)cardScanningEnabled {
+    cardScanningEnabled:(nullable NSNumber *)cardScanningEnabled
+    applePayMerchantId:(nullable NSString *)applePayMerchantId
+    applePayMerchantName:(nullable NSString *)applePayMerchantName {
   LyraInitializeOptionsInterface* pigeonResult = [[LyraInitializeOptionsInterface alloc] init];
   pigeonResult.apiServerName = apiServerName;
   pigeonResult.nfcEnabled = nfcEnabled;
   pigeonResult.cardScanningEnabled = cardScanningEnabled;
+  pigeonResult.applePayMerchantId = applePayMerchantId;
+  pigeonResult.applePayMerchantName = applePayMerchantName;
   return pigeonResult;
 }
 + (LyraInitializeOptionsInterface *)fromList:(NSArray *)list {
@@ -87,6 +91,8 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   NSAssert(pigeonResult.apiServerName != nil, @"");
   pigeonResult.nfcEnabled = GetNullableObjectAtIndex(list, 1);
   pigeonResult.cardScanningEnabled = GetNullableObjectAtIndex(list, 2);
+  pigeonResult.applePayMerchantId = GetNullableObjectAtIndex(list, 3);
+  pigeonResult.applePayMerchantName = GetNullableObjectAtIndex(list, 4);
   return pigeonResult;
 }
 + (nullable LyraInitializeOptionsInterface *)nullableFromList:(NSArray *)list {
@@ -97,6 +103,8 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
     (self.apiServerName ?: [NSNull null]),
     (self.nfcEnabled ?: [NSNull null]),
     (self.cardScanningEnabled ?: [NSNull null]),
+    (self.applePayMerchantId ?: [NSNull null]),
+    (self.applePayMerchantName ?: [NSNull null]),
   ];
 }
 @end
