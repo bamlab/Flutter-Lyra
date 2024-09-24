@@ -1,3 +1,7 @@
+# 0.4.1
+
+- **CHORE**: add support for Xcode 16
+
 # 0.4.0
 
 - [Android] Upgrade kotlin version
