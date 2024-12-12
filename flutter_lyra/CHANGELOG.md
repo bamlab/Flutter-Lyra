@@ -1,3 +1,7 @@
+# 0.4.2
+
+- **UPGRADE**: Upgrade iOS LyraPaymentSDK to 2.7.7
+
 # 0.4.1
 
 - **CHORE**: add support for Xcode 16
