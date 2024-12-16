@@ -1,3 +1,7 @@
+# 0.4.3
+
+- **UPGRADE**: Upgrade iOS LyraCardsRecognizer to 2.0.2
+
 # 0.4.2
 
 - **UPGRADE**: Upgrade iOS LyraPaymentSDK to 2.7.7
