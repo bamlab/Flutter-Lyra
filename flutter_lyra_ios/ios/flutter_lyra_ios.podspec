@@ -21,5 +21,5 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
 
   s.dependency 'LyraPaymentSDK', '~> 2.7.7'
-  s.dependency 'LyraCardsRecognizer', '~> 2.0.1'
+  s.dependency 'LyraCardsRecognizer', '~> 2.0.2'
 end
