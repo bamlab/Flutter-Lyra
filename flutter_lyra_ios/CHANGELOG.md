@@ -1,3 +1,9 @@
+# 0.5.0
+
+- **BREAKING CHANGE**: Minimum iOS deployment target increased from 11.0 to 15.1
+- **FIX**: Update LyraPaymentSDK from ~2.7.7 to ~2.8.0 to fix iOS SDK 18.5 compatibility issues
+- **FIX**: Resolve C++ static assertion failures with Sentry dependency by using LyraPaymentSDK 2.8.0+ which removes Sentry dependency
+
 # 0.4.1
 
 - **CHORE**: add support for Xcode 16
