@@ -1,6 +1,7 @@
 # 0.5.0
 
 - **BREAKING CHANGE**: [iOS] Minimum iOS deployment target increased from 11.0 to 15.1
+- **FEAT**: [Android] Update LyraPaymentSDK from ~1.5.7 to ~1.10.0
 - **FIX**: [iOS] Update LyraPaymentSDK from ~2.7.7 to ~2.8.0 to fix iOS SDK 18.5 compatibility issues
 - **FIX**: [iOS] Resolve C++ static assertion failures with Sentry dependency by using LyraPaymentSDK 2.8.0+ which removes Sentry dependency
 
