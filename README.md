@@ -77,7 +77,7 @@ Prerequisites:
 - In your `ios/Podfile`, update your ios sdk version :
 
 ```rb
-platform :ios, '11.0'
+platform :ios, '15.1'
 ```
 
 ## About Lyra
