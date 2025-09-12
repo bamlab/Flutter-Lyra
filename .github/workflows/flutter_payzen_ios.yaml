@@ -17,8 +17,8 @@ on:
 jobs:
   test:
     strategy:
-      matrix: {dir: ["flutter_lyra_ios"]}
-    runs-on: ubuntu-20.04
+      matrix: { dir: ["flutter_lyra_ios"] }
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{ matrix.dir }}
