@@ -22,8 +22,8 @@ class Converters {
 
         fun initializeOptionsFromInterface(
             optionsInterface: LyraApi.LyraInitializeOptionsInterface
-        ): HashMap<String, Any> {
-            val options = HashMap<String, Any>()
+        ): HashMap<String, Any?> {
+            val options = HashMap<String, Any?>()
 
             options[Lyra.OPTION_API_SERVER_NAME] = optionsInterface.apiServerName
 
