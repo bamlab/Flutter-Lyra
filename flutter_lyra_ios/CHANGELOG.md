@@ -1,3 +1,7 @@
+# 0.5.1
+
+- **FIX**: [Android] Fix kotlin compilation error
+
 # 0.5.0
 
 - **BREAKING CHANGE**: Minimum iOS deployment target increased from 11.0 to 15.1
