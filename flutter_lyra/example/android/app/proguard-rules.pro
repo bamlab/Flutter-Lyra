@@ -1,0 +1,3 @@
+-dontwarn cards.pay.paycardsrecognizer.sdk.Card
+-dontwarn cards.pay.paycardsrecognizer.sdk.ScanCardIntent$Builder
+-dontwarn org.slf4j.impl.StaticLoggerBinder
