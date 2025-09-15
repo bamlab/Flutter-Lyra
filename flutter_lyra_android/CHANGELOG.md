@@ -1,3 +1,9 @@
+# 0.6.0
+
+- **BREAKING CHANGE**: [Android] Update min and compile SDK versions to match Flutter's
+- **FEAT** [Android] Upgrade Gradle version to 8.12
+- **FEAT** [Android] Upgrade Kotlin version to 2.1.0
+
 # 0.5.1
 
 - **FIX**: [Android] Fix kotlin compilation error
