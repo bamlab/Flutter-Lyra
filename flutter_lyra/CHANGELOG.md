@@ -1,3 +1,9 @@
+# 0.7.0
+
+
+- **FEAT** [Android] Upgrade Lyra version to 0.12.0
+- **FEAT** [iOS] Upgrade Lyra version to 2.8.6
+
 # 0.6.0
 
 - **BREAKING CHANGE**: [Android] Update min and compile SDK versions to match Flutter's

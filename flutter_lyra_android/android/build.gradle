@@ -47,6 +47,6 @@ android {
     }
 
     dependencies {
-        implementation 'com.lyra:sdk:1.10.0'
+        implementation 'com.lyra:sdk:1.12.0'
     }
 }
