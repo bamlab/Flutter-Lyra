@@ -1,6 +1,17 @@
+# 0.7.1
+
+- **FIX** [iOS] Fixed a crash occurring when the payment view is shown, when
+  using UISceneDelegate.
+
+# 0.7.0
+
+- **FEAT** [Android] Upgrade Lyra version to 0.12.0
+- **FEAT** [iOS] Upgrade Lyra version to 2.8.6
+
 # 0.6.0
 
-- **BREAKING CHANGE**: [Android] Update min and compile SDK versions to match Flutter's
+- **BREAKING CHANGE**: [Android] Update min and compile SDK versions to match
+  Flutter's
 - **FEAT** [Android] Upgrade Gradle version to 8.12
 - **FEAT** [Android] Upgrade Kotlin version to 2.1.0
 
@@ -10,10 +21,13 @@
 
 # 0.5.0
 
-- **BREAKING CHANGE**: [iOS] Minimum iOS deployment target increased from 11.0 to 15.1
+- **BREAKING CHANGE**: [iOS] Minimum iOS deployment target increased from 11.0
+  to 15.1
 - **FEAT**: [Android] Update LyraPaymentSDK from ~1.5.7 to ~1.10.0
-- **FIX**: [iOS] Update LyraPaymentSDK from ~2.7.7 to ~2.8.0 to fix iOS SDK 18.5 compatibility issues
-- **FIX**: [iOS] Resolve C++ static assertion failures with Sentry dependency by using LyraPaymentSDK 2.8.0+ which removes Sentry dependency
+- **FIX**: [iOS] Update LyraPaymentSDK from ~2.7.7 to ~2.8.0 to fix iOS SDK 18.5
+  compatibility issues
+- **FIX**: [iOS] Resolve C++ static assertion failures with Sentry dependency by
+  using LyraPaymentSDK 2.8.0+ which removes Sentry dependency
 
 # 0.4.0
 
