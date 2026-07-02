@@ -53,8 +53,9 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                     details: nil
                 )
             )
+            return
         }
-        
+
         let formTokenVersion = Lyra.getFormTokenVersion()
         
         completion(
@@ -73,10 +74,21 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                     details: nil
                 )
             )
+            return
         }
-        
-        let viewController = ((UIApplication.shared.delegate?.window!)!).rootViewController
-        
+
+        guard let viewController = Self.resolveRootViewController() else {
+            completion(
+                nil,
+                FlutterError(
+                    code: "no_root_view_controller_error_code",
+                    message: "Could not find a root view controller to present the payment form",
+                    details: nil
+                )
+            )
+            return
+        }
+
 
         // If the request has a timeout argument, launch a timer that will cancel the process after the given time.
         var cancelProcessWork: DispatchWorkItem? = nil
@@ -106,7 +118,7 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
         
         do {
             try Lyra.process(
-                viewController!,
+                viewController,
                 request.formToken,
                 onSuccess: { ( _ lyraResponse: LyraResponse) -> Void in
                     cancelProcessWork?.cancel()
@@ -154,5 +166,23 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
     
     @objc func cancelLyraProcess() {
         Lyra.cancelProcess()
+    }
+
+    /// Resolves the root view controller used to present the payment form.
+    ///
+    /// Under the UIScene-based lifecycle the app window is owned by the active
+    /// scene, so `UIApplication.shared.delegate?.window` is `nil`. We therefore
+    /// look up the window from the connected scenes first, and only fall back to
+    /// the AppDelegate window for apps still using the legacy lifecycle.
+    static func resolveRootViewController() -> UIViewController? {
+        let windows = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+            .flatMap { $0.windows }
+
+        let window = windows.first(where: { $0.isKeyWindow }) ?? windows.first
+
+        return window?.rootViewController
+            ?? UIApplication.shared.delegate?.window??.rootViewController
     }
 }
