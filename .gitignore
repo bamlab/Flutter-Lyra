@@ -11,6 +11,7 @@ flutter_export_environment.sh
 coverage/
 
 Podfile.lock
+Package.resolved
 Pods/
 .symlinks/
 **/Flutter/App.framework/
