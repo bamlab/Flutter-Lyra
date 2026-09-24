@@ -3,11 +3,10 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(
   PigeonOptions(
     dartOut: 'lib/src/lyra.g.dart',
-    javaOut:
-        '../flutter_lyra_android/android/src/main/java/tech/bam/flutter_lyra/android/LyraApi.java',
-    javaOptions: JavaOptions(
+    kotlinOut:
+        '../flutter_lyra_android/android/src/main/kotlin/tech/bam/flutter_lyra/android/LyraApi.g.kt',
+    kotlinOptions: KotlinOptions(
       package: 'tech.bam.flutter_lyra.android',
-      className: 'LyraApi',
     ),
     swiftOut: '../flutter_lyra_ios/ios/Classes/LyraApi.g.swift',
   ),

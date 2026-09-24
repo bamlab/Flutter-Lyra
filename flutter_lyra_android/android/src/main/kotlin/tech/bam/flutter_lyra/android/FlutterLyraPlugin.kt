@@ -13,20 +13,20 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
-class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
+class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraHostApi
 {
     private var context: Context? = null
     private var activity: Activity? = null
 
-    private var lyraKey: LyraApi.LyraKeyInterface? = null
+    private var lyraKey: LyraKeyInterface? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        LyraApi.LyraHostApi.setUp(flutterPluginBinding.binaryMessenger, this)
+        LyraHostApi.setUp(flutterPluginBinding.binaryMessenger, this)
         context = flutterPluginBinding.applicationContext
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        LyraApi.LyraHostApi.setUp(binding.binaryMessenger, null)
+        LyraHostApi.setUp(binding.binaryMessenger, null)
         context = null
     }
 
@@ -47,13 +47,13 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
     }
 
     override fun initialize(
-        lyraKey: LyraApi.LyraKeyInterface,
-        result: LyraApi.Result<LyraApi.LyraKeyInterface>
+        lyraKey: LyraKeyInterface,
+        callback: (Result<LyraKeyInterface>) -> Unit
     ) {
         val context = this.context
 
         if (context == null) {
-            result.error(Error("No android context attached to your application"))
+            callback(Result.failure(Error("No android context attached to your application")))
             return
         }
 
@@ -64,56 +64,48 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
                 Converters.initializeOptionsFromInterface(lyraKey.options)
             )
             this.lyraKey = lyraKey
-            result.success(lyraKey)
+            callback(Result.success(lyraKey))
         } catch (error: Throwable) {
-            result.error(
-                FlutterError(
-                    code = "initialization_error_code",
-                    message = error.message,
-                    details = null
-                )
-            )
+            callback(Result.failure(FlutterError(
+                code = "initialization_error_code",
+                message = error.message,
+                details = null
+            )))
         }
     }
 
-    override fun getFormTokenVersion(result: LyraApi.Result<Long>) {
+    override fun getFormTokenVersion(callback: (Result<Long>) -> Unit) {
         if (lyraKey == null) {
-            result.error(
-                FlutterError(
-                    code = "lyra_not_initialized_error_code",
-                    message = "You should initialize Lyra first",
-                    details = null
-                )
-            )
+            callback(Result.failure(FlutterError(
+                code = "lyra_not_initialized_error_code",
+                message = "You should initialize Lyra first",
+                details = null
+            )))
             return
         }
         val formTokenVersion = Lyra.getFormTokenVersion()
 
-        result.success(formTokenVersion.toLong())
+        callback(Result.success(formTokenVersion.toLong()))
     }
 
-    override fun process(request: LyraApi.ProcessRequestInterface, result: LyraApi.Result<String>) {
+    override fun process(request: ProcessRequestInterface, callback: (Result<String>) -> Unit) {
         if (lyraKey == null) {
-            result.error(
-                FlutterError(
-                    code = "lyra_not_initialized_error_code",
-                    message = "You should initialize Lyra first",
-                    details = null
-                )
-            )
+            callback(Result.failure(FlutterError(
+                code = "lyra_not_initialized_error_code",
+                message = "You should initialize Lyra first",
+                details = null
+            )))
             return
         }
 
         val flutterActivity = activity
 
         if (flutterActivity !is FragmentActivity) {
-            result.error(
-                FlutterError(
-                    code = "fragment_activity_not_found_error_code",
-                    message = "Your activity should be or extend a FragmentActivity",
-                    details = null
-                )
-            )
+            callback(Result.failure(FlutterError(
+                code = "fragment_activity_not_found_error_code",
+                message = "Your activity should be or extend a FragmentActivity",
+                details = null
+            )))
             return
         }
 
@@ -136,7 +128,7 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
                 lyraHandler = object : LyraHandler {
                     override fun onSuccess(lyraResponse: LyraResponse) {
                         cancelProcessJob?.cancel()
-                        result.success(lyraResponse.toString())
+                        callback(Result.success(lyraResponse.toString()))
                     }
 
                     override fun onError(lyraException: LyraException, lyraResponse: LyraResponse?) {
@@ -147,30 +139,26 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
                         // if the payment completes successfully then the onSuccess handler will be called.
                         // if the payment is failed. Depending on the error, the payment form remains displayed or the onError handler will be called.
                         if(lyraException.errorCode != "MOB_013") {
-                            result.error(
-                                Converters.parseError(
-                                    lyraError = lyraException,
-                                    errorCodesInterface = request.errorCodes,
-                                    defaultFlutterError = FlutterError(
-                                        code = "process_error_code",
-                                        message = lyraException.message,
-                                        details = null
-                                    )
+                            callback(Result.failure(Converters.parseError(
+                                lyraError = lyraException,
+                                errorCodesInterface = request.errorCodes,
+                                defaultFlutterError = FlutterError(
+                                    code = "process_error_code",
+                                    message = lyraException.message,
+                                    details = null
                                 )
-                            )
+                            )))
                         }
                     }
                 }
             )
         } catch (error: Throwable) {
             cancelProcessJob?.cancel()
-            result.error(
-                FlutterError(
-                    code = "process_error_code",
-                    message = error.message,
-                    details = null
-                )
-            )
+            callback(Result.failure(FlutterError(
+                code = "process_error_code",
+                message = error.message,
+                details = null
+            )))
         }
     }
 }

@@ -7,13 +7,13 @@ class Converters {
     companion object {
         fun parseError(
             lyraError: LyraException,
-            errorCodesInterface: LyraApi.ErrorCodesInterface,
+            errorCodesInterface: ErrorCodesInterface,
             defaultFlutterError: FlutterError
         ): FlutterError {
             if (lyraError.errorCode == "MOB_009") {
                 return FlutterError(
-                    code = lyraError.errorCode,
-                    message = "${errorCodesInterface.paymentCancelledByUser} - ${lyraError.errorMessage}",
+                    code = errorCodesInterface.paymentCancelledByUser,
+                    message = lyraError.errorMessage,
                     details = null
                 )
             }
@@ -21,7 +21,7 @@ class Converters {
         }
 
         fun initializeOptionsFromInterface(
-            optionsInterface: LyraApi.LyraInitializeOptionsInterface
+            optionsInterface: LyraInitializeOptionsInterface
         ): HashMap<String, Any?> {
             val options = HashMap<String, Any?>()
 
