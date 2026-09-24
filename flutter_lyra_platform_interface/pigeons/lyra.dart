@@ -8,7 +8,8 @@ import 'package:pigeon/pigeon.dart';
     kotlinOptions: KotlinOptions(
       package: 'tech.bam.flutter_lyra.android',
     ),
-    swiftOut: '../flutter_lyra_ios/ios/Classes/LyraApi.g.swift',
+    swiftOut:
+        '../flutter_lyra_ios/ios/flutter_lyra_ios/Sources/flutter_lyra_ios/LyraApi.g.swift',
   ),
 )
 class ErrorCodesInterface {

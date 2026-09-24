@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'BSD', :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }  
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'flutter_lyra_ios/Sources/flutter_lyra_ios/**/*.swift'
   s.dependency 'Flutter'
 
   s.platform = :ios, '15.1'
