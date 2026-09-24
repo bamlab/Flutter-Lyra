@@ -10,7 +10,7 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
         let messenger : FlutterBinaryMessenger = registrar.messenger()
         let api : LyraHostApi & NSObjectProtocol = SwiftFlutterLyraPlugin.init()
         
-        LyraHostApiSetup(messenger, api);
+        SetUpLyraHostApi(messenger, api);
     }
     
     public func initializeLyraKey(_ lyraKey: LyraKeyInterface, completion: @escaping (LyraKeyInterface?, FlutterError?) -> Void)

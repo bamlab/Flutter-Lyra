@@ -21,12 +21,12 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraApi.LyraHostApi
     private var lyraKey: LyraApi.LyraKeyInterface? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        LyraApi.LyraHostApi.setup(flutterPluginBinding.binaryMessenger, this)
+        LyraApi.LyraHostApi.setUp(flutterPluginBinding.binaryMessenger, this)
         context = flutterPluginBinding.applicationContext
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        LyraApi.LyraHostApi.setup(binding.binaryMessenger, null)
+        LyraApi.LyraHostApi.setUp(binding.binaryMessenger, null)
         context = null
     }
 
