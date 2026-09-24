@@ -2,19 +2,15 @@ import Flutter
 import UIKit
 import LyraPaymentSDK
 
-public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
+public class FlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
         
     var lyraKey: LyraKeyInterface? = nil
     
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let messenger : FlutterBinaryMessenger = registrar.messenger()
-        let api : LyraHostApi & NSObjectProtocol = SwiftFlutterLyraPlugin.init()
-        
-        SetUpLyraHostApi(messenger, api);
+        LyraHostApiSetup.setUp(binaryMessenger: registrar.messenger(), api: FlutterLyraPlugin())
     }
     
-    public func initializeLyraKey(_ lyraKey: LyraKeyInterface, completion: @escaping (LyraKeyInterface?, FlutterError?) -> Void)
-    {
+    func initialize(lyraKey: LyraKeyInterface, completion: @escaping (Result<LyraKeyInterface, Error>) -> Void) {
         do {
             let options = Converters.initializeOptionsFromInterface(
                 optionsInterface: lyraKey.options
@@ -27,74 +23,54 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
             
             self.lyraKey = lyraKey
             
-            completion(
-                lyraKey,
-                nil
-            )
+            completion(.success(lyraKey))
         } catch let error  {
-            completion(
-                nil,
-                FlutterError(
-                    code: "initialization_error_code",
-                    message: error.localizedDescription,
-                    details: nil
-                )
-            )
+            completion(.failure(PigeonError(
+                code: "initialization_error_code",
+                message: error.localizedDescription,
+                details: nil
+            )))
         }
     }
     
-    public func getFormTokenVersion(completion: @escaping (NSNumber?, FlutterError?) -> Void) {
+    func getFormTokenVersion(completion: @escaping (Result<Int64, Error>) -> Void) {
         if (self.lyraKey == nil) {
-            completion(
-                nil,
-                FlutterError(
-                    code: "lyra_not_initialized_error_code",
-                    message: "You should initialize Lyra first",
-                    details: nil
-                )
-            )
+            completion(.failure(PigeonError(
+                code: "lyra_not_initialized_error_code",
+                message: "You should initialize Lyra first",
+                details: nil
+            )))
             return
         }
 
         let formTokenVersion = Lyra.getFormTokenVersion()
         
-        completion(
-            NSNumber(value: formTokenVersion),
-            nil
-        )
+        completion(.success(Int64(formTokenVersion)))
     }
     
-    public func processRequest(_ request: ProcessRequestInterface, completion: @escaping (String?, FlutterError?) -> Void) {
+    func process(request: ProcessRequestInterface, completion: @escaping (Result<String, Error>) -> Void) {
         if (self.lyraKey == nil) {
-            completion(
-                nil,
-                FlutterError(
-                    code: "lyra_not_initialized_error_code",
-                    message: "You should initialize Lyra first",
-                    details: nil
-                )
-            )
+            completion(.failure(PigeonError(
+                code: "lyra_not_initialized_error_code",
+                message: "You should initialize Lyra first",
+                details: nil
+            )))
             return
         }
 
         guard let viewController = Self.resolveRootViewController() else {
-            completion(
-                nil,
-                FlutterError(
-                    code: "no_root_view_controller_error_code",
-                    message: "Could not find a root view controller to present the payment form",
-                    details: nil
-                )
-            )
+            completion(.failure(PigeonError(
+                code: "no_root_view_controller_error_code",
+                message: "Could not find a root view controller to present the payment form",
+                details: nil
+            )))
             return
         }
 
 
         // If the request has a timeout argument, launch a timer that will cancel the process after the given time.
         var cancelProcessWork: DispatchWorkItem? = nil
-        let timeoutInSeconds = request.timeoutInSeconds
-
-        if (timeoutInSeconds != nil) {
+        if let timeoutInSeconds = request.timeoutInSeconds {
             // The [cancelProcessWork] will read the current state of the application (wether it is on foreground or not)
             // and cancel the process if the app is on foreground.
             // If not, it will wait for the app to be foregrounded and then cancel the process.
@@ -112,7 +88,7 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                 }
             })
             
-            let dispatchTime: DispatchTime = .now() + DispatchTimeInterval.seconds(timeoutInSeconds!.intValue)
+            let dispatchTime: DispatchTime = .now() + DispatchTimeInterval.seconds(Int(timeoutInSeconds))
             DispatchQueue.main.asyncAfter(deadline: dispatchTime, execute: cancelProcessWork!)
         }
         
@@ -122,10 +98,7 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                 request.formToken,
                 onSuccess: { ( _ lyraResponse: LyraResponse) -> Void in
                     cancelProcessWork?.cancel()
-                    completion(
-                        lyraResponse.getResponseDataString(),
-                        nil
-                    )
+                    completion(.success(lyraResponse.getResponseDataString()))
                 },
                 onError: { (_ error: LyraError, _ lyraResponse: LyraResponse?) -> Void in
                     cancelProcessWork?.cancel()
@@ -135,32 +108,26 @@ public class SwiftFlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                     // if the payment completes successfully then the onSuccess handler will be called.
                     // if the payment is failed. Depending on the error, the payment form remains displayed or the onError handler will be called.
                     if(error.errorCode != "MOB_013") {
-                        completion(
-                            nil,
-                            Converters.parseError(
-                                lyraError: error,
-                                errorCodesInterface: request.errorCodes,
-                                defaultFlutterError: FlutterError(
-                                    code: error.errorCode,
-                                    message: error.errorMessage,
-                                    details: nil
-                                )
+                        completion(.failure(Converters.parseError(
+                            lyraError: error,
+                            errorCodesInterface: request.errorCodes,
+                            defaultError: PigeonError(
+                                code: error.errorCode,
+                                message: error.errorMessage,
+                                details: nil
                             )
-                        )
+                        )))
                     }
                 }
             )
             
         } catch {
             cancelProcessWork?.cancel()
-            completion(
-                nil,
-                FlutterError(
-                    code: "lyra_process_error_code",
-                    message: "An unknown error occured",
-                    details: nil
-                )
-            )
+            completion(.failure(PigeonError(
+                code: "lyra_process_error_code",
+                message: "An unknown error occured",
+                details: nil
+            )))
         }
     }
     

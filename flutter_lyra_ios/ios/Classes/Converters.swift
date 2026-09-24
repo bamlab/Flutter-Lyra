@@ -1,22 +1,22 @@
 import LyraPaymentSDK
 
-public class Converters {
-    static public func parseError(
+class Converters {
+    static func parseError(
                 lyraError: LyraError,
                 errorCodesInterface: ErrorCodesInterface,
-                defaultFlutterError: FlutterError
-        ) -> FlutterError {
+                defaultError: PigeonError
+        ) -> PigeonError {
             if (lyraError.errorCode == "MOB_009") {
-                return FlutterError(
+                return PigeonError(
                     code: errorCodesInterface.paymentCancelledByUser,
                     message: lyraError.errorMessage,
                     details: nil
                 )
             }
-            return defaultFlutterError
+            return defaultError
         }
     
-    static public func initializeOptionsFromInterface(
+    static func initializeOptionsFromInterface(
         optionsInterface: LyraInitializeOptionsInterface
     ) -> [String : Any] {
         var options = [String : Any]()

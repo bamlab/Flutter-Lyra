@@ -9,8 +9,7 @@ import 'package:pigeon/pigeon.dart';
       package: 'tech.bam.flutter_lyra.android',
       className: 'LyraApi',
     ),
-    objcHeaderOut: '../flutter_lyra_ios/ios/Classes/lyra_api.h',
-    objcSourceOut: '../flutter_lyra_ios/ios/Classes/lyra_api.m',
+    swiftOut: '../flutter_lyra_ios/ios/Classes/LyraApi.g.swift',
   ),
 )
 class ErrorCodesInterface {
@@ -61,12 +60,12 @@ class ProcessRequestInterface {
 
 @HostApi()
 abstract class LyraHostApi {
-  @async
+  @asyncCallback
   LyraKeyInterface initialize(LyraKeyInterface lyraKey);
 
-  @async
+  @asyncCallback
   int getFormTokenVersion();
 
-  @async
+  @asyncCallback
   String process(ProcessRequestInterface request);
 }
