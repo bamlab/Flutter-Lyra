@@ -89,6 +89,32 @@ void main() {
 
         expect(lyraResponse, receivedLyraResponse);
       });
+
+      test('forwards process options', () async {
+        const formToken = 'formToken';
+        final options = LyraProcessOptionsInterface(
+          customPayButtonLabel: 'customPayButtonLabel',
+          customHeaderLabel: 'customHeaderLabel',
+          customPopupLabel: 'customPopupLabel',
+        );
+
+        registerFallbackValue(
+          ProcessRequestInterface(
+            formToken: formToken,
+            errorCodes: errorCodesInterface,
+          ),
+        );
+        when(
+          () => mockLyraHostApi.process(any()),
+        ).thenAnswer((_) async => 'lyraResponse');
+
+        await FlutterLyraPlatform.instance.process(formToken, options: options);
+
+        final request = verify(() => mockLyraHostApi.process(captureAny()))
+            .captured
+            .single as ProcessRequestInterface;
+        expect(request.options, options);
+      });
     });
   });
 }

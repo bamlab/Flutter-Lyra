@@ -2,7 +2,9 @@ import 'package:flutter_lyra_platform_interface/flutter_lyra_platform_interface.
 
 import 'helpers/adapt_errors.dart';
 import 'helpers/lyra_options_converter.dart';
+import 'helpers/lyra_process_options_converter.dart';
 import 'models/lyra_initialize_options.dart';
+import 'models/lyra_process_options.dart';
 
 FlutterLyraPlatform get _platform => FlutterLyraPlatform.instance;
 
@@ -48,15 +50,21 @@ class Lyra {
   /// process will be cancelled.
   ///
   /// If not specified, the process will not timeout.
+  ///
+  /// [options] allows to customize the labels of the payment form.
   /// {@endtemplate}
   Future<String> process(
     String formToken, {
     Duration? timeout,
+    LyraProcessOptions? options,
   }) async {
     try {
       final lyraResponse = await _platform.process(
         formToken,
         timeout: timeout,
+        options: options == null
+            ? null
+            : LyraProcessOptionsConverter.toInterface(options),
       );
 
       return lyraResponse;

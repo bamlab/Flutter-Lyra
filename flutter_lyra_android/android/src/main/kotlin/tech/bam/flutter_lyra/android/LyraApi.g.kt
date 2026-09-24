@@ -324,10 +324,56 @@ data class LyraKeyInterface (
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
+data class LyraProcessOptionsInterface (
+  val customPayButtonLabel: String? = null,
+  val customHeaderLabel: String? = null,
+  val customPopupLabel: String? = null
+)
+ {
+  companion object {
+    fun fromList(pigeonVar_list: List<Any?>): LyraProcessOptionsInterface {
+      val customPayButtonLabel = pigeonVar_list[0] as String?
+      val customHeaderLabel = pigeonVar_list[1] as String?
+      val customPopupLabel = pigeonVar_list[2] as String?
+      return LyraProcessOptionsInterface(customPayButtonLabel, customHeaderLabel, customPopupLabel)
+    }
+  }
+  fun toList(): List<Any?> {
+    return listOf(
+      customPayButtonLabel,
+      customHeaderLabel,
+      customPopupLabel,
+    )
+  }
+  override fun equals(other: Any?): Boolean {
+    if (other == null || other.javaClass != javaClass) {
+      return false
+    }
+    if (this === other) {
+      return true
+    }
+    val other = other as LyraProcessOptionsInterface
+    return LyraApiPigeonUtils.deepEquals(this.customPayButtonLabel, other.customPayButtonLabel) && LyraApiPigeonUtils.deepEquals(this.customHeaderLabel, other.customHeaderLabel) && LyraApiPigeonUtils.deepEquals(this.customPopupLabel, other.customPopupLabel)
+  }
+
+  override fun hashCode(): Int {
+    var result = javaClass.hashCode()
+    result = 31 * result + LyraApiPigeonUtils.deepHash(this.customPayButtonLabel)
+    result = 31 * result + LyraApiPigeonUtils.deepHash(this.customHeaderLabel)
+    result = 31 * result + LyraApiPigeonUtils.deepHash(this.customPopupLabel)
+    return result
+  }
+  override fun toString(): String {
+    return "LyraProcessOptionsInterface(customPayButtonLabel=$customPayButtonLabel, customHeaderLabel=$customHeaderLabel, customPopupLabel=$customPopupLabel)"
+  }
+}
+
+/** Generated class from Pigeon that represents data sent in messages. */
 data class ProcessRequestInterface (
   val formToken: String,
   val errorCodes: ErrorCodesInterface,
-  val timeoutInSeconds: Long? = null
+  val timeoutInSeconds: Long? = null,
+  val options: LyraProcessOptionsInterface? = null
 )
  {
   companion object {
@@ -335,7 +381,8 @@ data class ProcessRequestInterface (
       val formToken = pigeonVar_list[0] as String
       val errorCodes = pigeonVar_list[1] as ErrorCodesInterface
       val timeoutInSeconds = pigeonVar_list[2] as Long?
-      return ProcessRequestInterface(formToken, errorCodes, timeoutInSeconds)
+      val options = pigeonVar_list[3] as LyraProcessOptionsInterface?
+      return ProcessRequestInterface(formToken, errorCodes, timeoutInSeconds, options)
     }
   }
   fun toList(): List<Any?> {
@@ -343,6 +390,7 @@ data class ProcessRequestInterface (
       formToken,
       errorCodes,
       timeoutInSeconds,
+      options,
     )
   }
   override fun equals(other: Any?): Boolean {
@@ -353,7 +401,7 @@ data class ProcessRequestInterface (
       return true
     }
     val other = other as ProcessRequestInterface
-    return LyraApiPigeonUtils.deepEquals(this.formToken, other.formToken) && LyraApiPigeonUtils.deepEquals(this.errorCodes, other.errorCodes) && LyraApiPigeonUtils.deepEquals(this.timeoutInSeconds, other.timeoutInSeconds)
+    return LyraApiPigeonUtils.deepEquals(this.formToken, other.formToken) && LyraApiPigeonUtils.deepEquals(this.errorCodes, other.errorCodes) && LyraApiPigeonUtils.deepEquals(this.timeoutInSeconds, other.timeoutInSeconds) && LyraApiPigeonUtils.deepEquals(this.options, other.options)
   }
 
   override fun hashCode(): Int {
@@ -361,10 +409,11 @@ data class ProcessRequestInterface (
     result = 31 * result + LyraApiPigeonUtils.deepHash(this.formToken)
     result = 31 * result + LyraApiPigeonUtils.deepHash(this.errorCodes)
     result = 31 * result + LyraApiPigeonUtils.deepHash(this.timeoutInSeconds)
+    result = 31 * result + LyraApiPigeonUtils.deepHash(this.options)
     return result
   }
   override fun toString(): String {
-    return "ProcessRequestInterface(formToken=$formToken, errorCodes=$errorCodes, timeoutInSeconds=$timeoutInSeconds)"
+    return "ProcessRequestInterface(formToken=$formToken, errorCodes=$errorCodes, timeoutInSeconds=$timeoutInSeconds, options=$options)"
   }
 }
 private open class LyraApiPigeonCodec : StandardMessageCodec() {
@@ -387,6 +436,11 @@ private open class LyraApiPigeonCodec : StandardMessageCodec() {
       }
       132.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
+          LyraProcessOptionsInterface.fromList(it)
+        }
+      }
+      133.toByte() -> {
+        return (readValue(buffer) as? List<Any?>)?.let {
           ProcessRequestInterface.fromList(it)
         }
       }
@@ -407,8 +461,12 @@ private open class LyraApiPigeonCodec : StandardMessageCodec() {
         stream.write(131)
         writeValue(stream, value.toList())
       }
-      is ProcessRequestInterface -> {
+      is LyraProcessOptionsInterface -> {
         stream.write(132)
+        writeValue(stream, value.toList())
+      }
+      is ProcessRequestInterface -> {
+        stream.write(133)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)

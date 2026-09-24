@@ -64,12 +64,14 @@ abstract class FlutterLyraPlatform extends PlatformInterface {
   Future<String> process(
     String formToken, {
     Duration? timeout,
+    LyraProcessOptionsInterface? options,
   }) =>
       lyraHostApi.process(
         ProcessRequestInterface(
           formToken: formToken,
           errorCodes: errorCodesInterface,
           timeoutInSeconds: timeout?.inSeconds,
+          options: options,
         ),
       );
 }

@@ -119,7 +119,8 @@ public class FlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                             )
                         )))
                     }
-                }
+                },
+                Converters.processOptionsFromInterface(optionsInterface: request.options)
             )
             
         } catch {

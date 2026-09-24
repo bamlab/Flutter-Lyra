@@ -46,16 +46,30 @@ class LyraKeyInterface {
   final LyraInitializeOptionsInterface options;
 }
 
+class LyraProcessOptionsInterface {
+  const LyraProcessOptionsInterface({
+    this.customPayButtonLabel,
+    this.customHeaderLabel,
+    this.customPopupLabel,
+  });
+
+  final String? customPayButtonLabel;
+  final String? customHeaderLabel;
+  final String? customPopupLabel;
+}
+
 class ProcessRequestInterface {
   const ProcessRequestInterface({
     required this.formToken,
     required this.errorCodes,
     this.timeoutInSeconds,
+    this.options,
   });
 
   final String formToken;
   final ErrorCodesInterface errorCodes;
   final int? timeoutInSeconds;
+  final LyraProcessOptionsInterface? options;
 }
 
 @HostApi()

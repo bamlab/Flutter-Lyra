@@ -39,5 +39,23 @@ class Converters {
 
             return options
         }
+
+        fun processOptionsFromInterface(
+            optionsInterface: LyraProcessOptionsInterface?
+        ): HashMap<String, Any?> {
+            val options = HashMap<String, Any?>()
+
+            optionsInterface?.customPayButtonLabel?.let {
+                options[Lyra.CUSTOM_PAY_BUTTON_LABEL] = it
+            }
+            optionsInterface?.customHeaderLabel?.let {
+                options[Lyra.CUSTOM_HEADER_LABEL] = it
+            }
+            optionsInterface?.customPopupLabel?.let {
+                options[Lyra.CUSTOM_POPUP_LABEL] = it
+            }
+
+            return options
+        }
     }
 }

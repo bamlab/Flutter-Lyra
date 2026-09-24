@@ -25,4 +25,14 @@ class Converters {
             applePayMerchantName: optionsInterface.applePayMerchantName ?? ""
         )
     }
+
+    static func processOptionsFromInterface(
+        optionsInterface: LyraProcessOptionsInterface?
+    ) -> ProcessOptions {
+        return ProcessOptions(
+            customPayButtonLabel: optionsInterface?.customPayButtonLabel ?? "",
+            customHeaderLabel: optionsInterface?.customHeaderLabel ?? "",
+            customPopupLabel: optionsInterface?.customPopupLabel ?? ""
+        )
+    }
 }

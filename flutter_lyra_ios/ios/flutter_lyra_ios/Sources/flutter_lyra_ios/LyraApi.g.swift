@@ -315,10 +315,56 @@ struct LyraKeyInterface: Hashable, CustomStringConvertible {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
+struct LyraProcessOptionsInterface: Hashable, CustomStringConvertible {
+  var customPayButtonLabel: String? = nil
+  var customHeaderLabel: String? = nil
+  var customPopupLabel: String? = nil
+
+
+  // swift-format-ignore: AlwaysUseLowerCamelCase
+  static func fromList(_ pigeonVar_list: [Any?]) -> LyraProcessOptionsInterface? {
+    let customPayButtonLabel: String? = nilOrValue(pigeonVar_list[0])
+    let customHeaderLabel: String? = nilOrValue(pigeonVar_list[1])
+    let customPopupLabel: String? = nilOrValue(pigeonVar_list[2])
+
+    return LyraProcessOptionsInterface(
+      customPayButtonLabel: customPayButtonLabel,
+      customHeaderLabel: customHeaderLabel,
+      customPopupLabel: customPopupLabel
+    )
+  }
+  func toList() -> [Any?] {
+    return [
+      customPayButtonLabel,
+      customHeaderLabel,
+      customPopupLabel,
+    ]
+  }
+  static func == (lhs: LyraProcessOptionsInterface, rhs: LyraProcessOptionsInterface) -> Bool {
+    if Swift.type(of: lhs) != Swift.type(of: rhs) {
+      return false
+    }
+    return LyraApiPigeonInternal.deepEquals(lhs.customPayButtonLabel, rhs.customPayButtonLabel) && LyraApiPigeonInternal.deepEquals(lhs.customHeaderLabel, rhs.customHeaderLabel) && LyraApiPigeonInternal.deepEquals(lhs.customPopupLabel, rhs.customPopupLabel)
+  }
+
+  func hash(into hasher: inout Hasher) {
+    hasher.combine("LyraProcessOptionsInterface")
+    LyraApiPigeonInternal.deepHash(value: customPayButtonLabel, hasher: &hasher)
+    LyraApiPigeonInternal.deepHash(value: customHeaderLabel, hasher: &hasher)
+    LyraApiPigeonInternal.deepHash(value: customPopupLabel, hasher: &hasher)
+  }
+
+  public var description: String {
+    return "LyraProcessOptionsInterface(customPayButtonLabel: \(String(describing: customPayButtonLabel)), customHeaderLabel: \(String(describing: customHeaderLabel)), customPopupLabel: \(String(describing: customPopupLabel)))"
+  }
+}
+
+/// Generated class from Pigeon that represents data sent in messages.
 struct ProcessRequestInterface: Hashable, CustomStringConvertible {
   var formToken: String
   var errorCodes: ErrorCodesInterface
   var timeoutInSeconds: Int64? = nil
+  var options: LyraProcessOptionsInterface? = nil
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -326,11 +372,13 @@ struct ProcessRequestInterface: Hashable, CustomStringConvertible {
     let formToken = pigeonVar_list[0] as! String
     let errorCodes = pigeonVar_list[1] as! ErrorCodesInterface
     let timeoutInSeconds: Int64? = nilOrValue(pigeonVar_list[2])
+    let options: LyraProcessOptionsInterface? = nilOrValue(pigeonVar_list[3])
 
     return ProcessRequestInterface(
       formToken: formToken,
       errorCodes: errorCodes,
-      timeoutInSeconds: timeoutInSeconds
+      timeoutInSeconds: timeoutInSeconds,
+      options: options
     )
   }
   func toList() -> [Any?] {
@@ -338,13 +386,14 @@ struct ProcessRequestInterface: Hashable, CustomStringConvertible {
       formToken,
       errorCodes,
       timeoutInSeconds,
+      options,
     ]
   }
   static func == (lhs: ProcessRequestInterface, rhs: ProcessRequestInterface) -> Bool {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return LyraApiPigeonInternal.deepEquals(lhs.formToken, rhs.formToken) && LyraApiPigeonInternal.deepEquals(lhs.errorCodes, rhs.errorCodes) && LyraApiPigeonInternal.deepEquals(lhs.timeoutInSeconds, rhs.timeoutInSeconds)
+    return LyraApiPigeonInternal.deepEquals(lhs.formToken, rhs.formToken) && LyraApiPigeonInternal.deepEquals(lhs.errorCodes, rhs.errorCodes) && LyraApiPigeonInternal.deepEquals(lhs.timeoutInSeconds, rhs.timeoutInSeconds) && LyraApiPigeonInternal.deepEquals(lhs.options, rhs.options)
   }
 
   func hash(into hasher: inout Hasher) {
@@ -352,10 +401,11 @@ struct ProcessRequestInterface: Hashable, CustomStringConvertible {
     LyraApiPigeonInternal.deepHash(value: formToken, hasher: &hasher)
     LyraApiPigeonInternal.deepHash(value: errorCodes, hasher: &hasher)
     LyraApiPigeonInternal.deepHash(value: timeoutInSeconds, hasher: &hasher)
+    LyraApiPigeonInternal.deepHash(value: options, hasher: &hasher)
   }
 
   public var description: String {
-    return "ProcessRequestInterface(formToken: \(String(describing: formToken)), errorCodes: \(String(describing: errorCodes)), timeoutInSeconds: \(String(describing: timeoutInSeconds)))"
+    return "ProcessRequestInterface(formToken: \(String(describing: formToken)), errorCodes: \(String(describing: errorCodes)), timeoutInSeconds: \(String(describing: timeoutInSeconds)), options: \(String(describing: options)))"
   }
 }
 
@@ -369,6 +419,8 @@ private class LyraApiPigeonCodecReader: FlutterStandardReader {
     case 131:
       return LyraKeyInterface.fromList(self.readValue() as! [Any?])
     case 132:
+      return LyraProcessOptionsInterface.fromList(self.readValue() as! [Any?])
+    case 133:
       return ProcessRequestInterface.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
@@ -387,8 +439,11 @@ private class LyraApiPigeonCodecWriter: FlutterStandardWriter {
     } else if let value = value as? LyraKeyInterface {
       super.writeByte(131)
       super.writeValue(value.toList())
-    } else if let value = value as? ProcessRequestInterface {
+    } else if let value = value as? LyraProcessOptionsInterface {
       super.writeByte(132)
+      super.writeValue(value.toList())
+    } else if let value = value as? ProcessRequestInterface {
+      super.writeByte(133)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)

@@ -265,11 +265,71 @@ class LyraKeyInterface {
   }
 }
 
+class LyraProcessOptionsInterface {
+  LyraProcessOptionsInterface({
+    this.customPayButtonLabel,
+    this.customHeaderLabel,
+    this.customPopupLabel,
+  });
+
+  String? customPayButtonLabel;
+
+  String? customHeaderLabel;
+
+  String? customPopupLabel;
+
+  List<Object?> _toList() {
+    return <Object?>[
+      customPayButtonLabel,
+      customHeaderLabel,
+      customPopupLabel,
+    ];
+  }
+
+  Object encode() {
+    return _toList();
+  }
+
+  static LyraProcessOptionsInterface decode(Object result) {
+    result as List<Object?>;
+    return LyraProcessOptionsInterface(
+      customPayButtonLabel: result[0] as String?,
+      customHeaderLabel: result[1] as String?,
+      customPopupLabel: result[2] as String?,
+    );
+  }
+
+  @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(Object other) {
+    if (other is! LyraProcessOptionsInterface ||
+        other.runtimeType != runtimeType) {
+      return false;
+    }
+    if (identical(this, other)) {
+      return true;
+    }
+    return _deepEquals(customPayButtonLabel, other.customPayButtonLabel) &&
+        _deepEquals(customHeaderLabel, other.customHeaderLabel) &&
+        _deepEquals(customPopupLabel, other.customPopupLabel);
+  }
+
+  @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
+
+  @override
+  String toString() {
+    return 'LyraProcessOptionsInterface(customPayButtonLabel: $customPayButtonLabel, customHeaderLabel: $customHeaderLabel, customPopupLabel: $customPopupLabel)';
+  }
+}
+
 class ProcessRequestInterface {
   ProcessRequestInterface({
     required this.formToken,
     required this.errorCodes,
     this.timeoutInSeconds,
+    this.options,
   });
 
   String formToken;
@@ -278,11 +338,14 @@ class ProcessRequestInterface {
 
   int? timeoutInSeconds;
 
+  LyraProcessOptionsInterface? options;
+
   List<Object?> _toList() {
     return <Object?>[
       formToken,
       errorCodes,
       timeoutInSeconds,
+      options,
     ];
   }
 
@@ -296,6 +359,7 @@ class ProcessRequestInterface {
       formToken: result[0]! as String,
       errorCodes: result[1]! as ErrorCodesInterface,
       timeoutInSeconds: result[2] as int?,
+      options: result[3] as LyraProcessOptionsInterface?,
     );
   }
 
@@ -310,7 +374,8 @@ class ProcessRequestInterface {
     }
     return _deepEquals(formToken, other.formToken) &&
         _deepEquals(errorCodes, other.errorCodes) &&
-        _deepEquals(timeoutInSeconds, other.timeoutInSeconds);
+        _deepEquals(timeoutInSeconds, other.timeoutInSeconds) &&
+        _deepEquals(options, other.options);
   }
 
   @override
@@ -319,7 +384,7 @@ class ProcessRequestInterface {
 
   @override
   String toString() {
-    return 'ProcessRequestInterface(formToken: $formToken, errorCodes: $errorCodes, timeoutInSeconds: $timeoutInSeconds)';
+    return 'ProcessRequestInterface(formToken: $formToken, errorCodes: $errorCodes, timeoutInSeconds: $timeoutInSeconds, options: $options)';
   }
 }
 
@@ -339,8 +404,11 @@ class _PigeonCodec extends StandardMessageCodec {
     } else if (value is LyraKeyInterface) {
       buffer.putUint8(131);
       writeValue(buffer, value.encode());
-    } else if (value is ProcessRequestInterface) {
+    } else if (value is LyraProcessOptionsInterface) {
       buffer.putUint8(132);
+      writeValue(buffer, value.encode());
+    } else if (value is ProcessRequestInterface) {
+      buffer.putUint8(133);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -357,6 +425,8 @@ class _PigeonCodec extends StandardMessageCodec {
       case 131:
         return LyraKeyInterface.decode(readValue(buffer)!);
       case 132:
+        return LyraProcessOptionsInterface.decode(readValue(buffer)!);
+      case 133:
         return ProcessRequestInterface.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);

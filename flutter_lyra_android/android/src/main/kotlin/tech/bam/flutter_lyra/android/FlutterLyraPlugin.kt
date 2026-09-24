@@ -150,7 +150,8 @@ class FlutterLyraPlugin : FlutterPlugin, ActivityAware, LyraHostApi
                             )))
                         }
                     }
-                }
+                },
+                options = Converters.processOptionsFromInterface(request.options)
             )
         } catch (error: Throwable) {
             cancelProcessJob?.cancel()

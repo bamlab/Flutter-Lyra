@@ -162,6 +162,37 @@ void main() {
         );
       });
 
+      test('forwards process options', () async {
+        const formToken = 'formToken';
+        const lyraResponse = 'lyraResponse';
+        const processOptions = LyraProcessOptions(
+          customPayButtonLabel: 'customPayButtonLabel',
+          customHeaderLabel: 'customHeaderLabel',
+          customPopupLabel: 'customPopupLabel',
+        );
+        final processOptionsInterface = LyraProcessOptionsInterface(
+          customPayButtonLabel: 'customPayButtonLabel',
+          customHeaderLabel: 'customHeaderLabel',
+          customPopupLabel: 'customPopupLabel',
+        );
+
+        when(
+          () => flutterLyraPlatform.process(
+            formToken,
+            options: processOptionsInterface,
+          ),
+        ).thenAnswer(
+          (_) async => lyraResponse,
+        );
+
+        final receivedLyraResponse = await lyra.process(
+          formToken,
+          options: processOptions,
+        );
+
+        expect(lyraResponse, receivedLyraResponse);
+      });
+
       test('parse throw error', () async {
         const formToken = 'formToken';
 
