@@ -22,9 +22,9 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_lyra_android: ^0.7.1
-  flutter_lyra_ios: ^0.7.1
-  flutter_lyra_platform_interface: ^0.7.1
+  flutter_lyra_android: ^1.0.0
+  flutter_lyra_ios: ^1.0.0
+  flutter_lyra_platform_interface: ^1.0.0
 
 dev_dependencies:
   analyzer: ^4.7.0

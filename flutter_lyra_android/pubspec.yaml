@@ -22,7 +22,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_lyra_platform_interface: ^0.7.0
+  flutter_lyra_platform_interface: ^1.0.0
 dev_dependencies:
   analyzer: ^5.13.0
   flutter_test:
