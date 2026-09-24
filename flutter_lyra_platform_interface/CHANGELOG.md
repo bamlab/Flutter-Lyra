@@ -1,3 +1,17 @@
+# 1.0.0
+
+- **BREAKING CHANGE**: Update minimum Dart SDK to 3.5 and Flutter to 3.24
+- **BREAKING CHANGE**: [iOS] Upgrade Lyra version to 4.0.5. Card scanning is
+  now provided by Lyra (LyraCardScan), the LyraCardsRecognizer dependency is
+  removed
+- **BREAKING CHANGE**: [Android] Errors are now sent to Dart with their real
+  code instead of the native exception description
+- **FEAT** [iOS] Add Swift Package Manager support
+- **FEAT** Add `LyraProcessOptions` to customize the pay button, header and
+  popup labels of the payment form
+- **REFACTOR** Upgrade pigeon to 29.0.2 and generate the native bridges in
+  Swift (iOS) and Kotlin (Android)
+
 # 0.7.1
 
 - **FIX** [iOS] Fixed a crash occurring when the payment view is shown, when
