@@ -18,6 +18,7 @@ public class FlutterLyraPlugin: NSObject, FlutterPlugin, LyraHostApi {
                         
             try Lyra.initialize(
                 lyraKey.publicKey,
+                lyraKey.options.apiServerName,
                 options
             )
             
